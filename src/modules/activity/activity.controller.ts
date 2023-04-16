@@ -65,6 +65,51 @@ export class ActivityController {
     }
   }
 
+  @Get('course/:id')
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  async findByCourseId(@Param('id') id: string) {
+    try {
+      const activities = await this.activityService.findByCourseId(id);
+
+      return {
+        message: 'Activities',
+        activities,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'findByCourseId');
+    }
+  }
+
+  @Get('student/:id')
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  async findByStudentId(@Param('id') id: string) {
+    try {
+      const activities = await this.activityService.findByStudentId(id);
+
+      return {
+        message: 'Activities',
+        activities,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'findByStudentId');
+    }
+  }
+
+  @Get('teacher/:id')
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  async findByTeacherId(@Param('id') id: string) {
+    try {
+      const activities = await this.activityService.findByTeacherId(id);
+
+      return {
+        message: 'Activities',
+        activities,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'findByTeacherId');
+    }
+  }
+
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Patch(':id')
   async update(

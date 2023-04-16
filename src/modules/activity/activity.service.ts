@@ -36,6 +36,36 @@ export class ActivityService {
     return activity;
   }
 
+  async findByCourseId(courseId: string) {
+    const activities = await this.activityRepository.findByCourseId(courseId);
+
+    if (activities.length === 0) {
+      throw new NotFoundException('Activities not found.');
+    }
+
+    return activities;
+  }
+
+  async findByStudentId(studentId: string) {
+    const activities = await this.activityRepository.findByStudentId(studentId);
+
+    if (activities.length === 0) {
+      throw new NotFoundException('Activities not found.');
+    }
+
+    return activities;
+  }
+
+  async findByTeacherId(teacherId: string) {
+    const activities = await this.activityRepository.findByTeacherId(teacherId);
+
+    if (activities.length === 0) {
+      throw new NotFoundException('Activities not found.');
+    }
+
+    return activities;
+  }
+
   async update(id: string, updateActivityDto: UpdateActivityDto) {
     const activityExists = await this.activityRepository.findById(id);
 

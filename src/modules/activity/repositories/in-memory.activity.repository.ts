@@ -25,6 +25,36 @@ export class InMemoryActivityRepository implements IActivityRepository {
     return activity;
   }
 
+  async findByStudentId(studentId: string): Promise<Activity[]> {
+    const activity = this.activity.map((activity) => {
+      if (activity.course.students.map((student) => student.id === studentId)) {
+        return activity;
+      }
+    });
+
+    return activity;
+  }
+
+  async findByTeacherId(teacherId: string): Promise<Activity[]> {
+    const activities = this.activity.map((activity) => {
+      if (activity.course.teachers.map((teacher) => teacher.id === teacherId)) {
+        return activity;
+      }
+    });
+
+    return activities;
+  }
+
+  async findByCourseId(courseId: string): Promise<Activity[]> {
+    const activities = this.activity.map((activity) => {
+      if (activity.course.id === courseId) {
+        return activity;
+      }
+    });
+
+    return activities;
+  }
+
   async update(id: string, activity: Activity): Promise<Activity> {
     const activityIndex = this.activity.findIndex(
       (activity) => activity.id === id,

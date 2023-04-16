@@ -41,6 +41,77 @@ export class ActivityRepository implements IActivityRepository {
     return activities;
   }
 
+  async findByStudentId(studentId: string): Promise<Activity[]> {
+    const student = await this.prisma.student.findUnique({
+      where: {
+        id: studentId,
+      },
+    });
+
+    if (!student) {
+      throw new NotFoundException('Student not found.');
+    }
+
+    const activity = await this.prisma.activity.findMany({
+      where: {
+        Course: {
+          Student: {
+            some: {
+              id: studentId,
+            },
+          },
+        },
+      },
+    });
+
+    return activity;
+  }
+  async findByTeacherId(teacherId: string): Promise<Activity[]> {
+    const teacher = await this.prisma.teacher.findUnique({
+      where: {
+        id: teacherId,
+      },
+    });
+
+    if (!teacher) {
+      throw new NotFoundException('Teacher not found.');
+    }
+
+    const activities = await this.prisma.activity.findMany({
+      where: {
+        Course: {
+          Teacher: {
+            some: {
+              id: teacherId,
+            },
+          },
+        },
+      },
+    });
+
+    return activities;
+  }
+
+  async findByCourseId(courseId: string): Promise<Activity[]> {
+    const course = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
+
+    if (!course) {
+      throw new NotFoundException('Course not found.');
+    }
+
+    const activities = await this.prisma.activity.findMany({
+      where: {
+        course_id: courseId,
+      },
+    });
+
+    return activities;
+  }
+
   async update(id: string, data: Activity): Promise<Activity> {
     const activity = await this.prisma.activity.update({
       where: {
