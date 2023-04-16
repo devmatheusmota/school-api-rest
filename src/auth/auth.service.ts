@@ -14,18 +14,12 @@ export class AuthService {
 
   async validateUser(email: string, senha: string): Promise<any> {
     let user: any;
-
     try {
-      user = await this.studentService.findByEmail(email);
-      user.role = 'student';
-      if (!user) {
-        user = await this.teacherService.findByEmail(email);
-        user.role = 'teacher';
-      }
+      user =
+        (await this.studentService.findByEmail(email)) ||
+        (await this.teacherService.findByEmail(email));
 
-      if (!user) {
-        return null;
-      }
+      if (!user) return null;
     } catch (error) {
       return null;
     }
