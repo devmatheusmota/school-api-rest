@@ -1,26 +1,74 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
+import { ICourseRepository } from './repositories/course.repository.interface';
 
 @Injectable()
 export class CourseService {
-  create(createCourseDto: CreateCourseDto) {
-    return 'This action adds a new course';
+  constructor(
+    @Inject('CourseRepository')
+    private readonly courseRepository: ICourseRepository,
+  ) {}
+
+  async create(createCourseDto: CreateCourseDto) {
+    const courseExists = await this.courseRepository.checkIfCourseExists(
+      createCourseDto.name,
+      createCourseDto.year,
+    );
+
+    if (courseExists) {
+      throw new BadRequestException('Course already exists.');
+    }
+
+    const course = await this.courseRepository.create(createCourseDto);
+
+    return course;
   }
 
-  findAll() {
-    return `This action returns all course`;
+  async findAll() {
+    const courses = await this.courseRepository.findAll();
+
+    if (courses.length === 0) {
+      throw new NotFoundException('No courses found.');
+    }
+
+    return courses;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} course`;
+  async findOne(id: string) {
+    const course = await this.courseRepository.findById(id);
+
+    if (!course) {
+      throw new NotFoundException('Course not found.');
+    }
+
+    return course;
   }
 
-  update(id: number, updateCourseDto: UpdateCourseDto) {
-    return `This action updates a #${id} course`;
+  async update(id: string, updateCourseDto: UpdateCourseDto) {
+    const courseExists = await this.courseRepository.findById(id);
+
+    if (!courseExists) {
+      throw new NotFoundException('Course not found.');
+    }
+
+    const course = await this.courseRepository.update(id, updateCourseDto);
+
+    return course;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} course`;
+  async remove(id: string) {
+    const courseExists = await this.courseRepository.findById(id);
+
+    if (!courseExists) {
+      throw new NotFoundException('Course not found.');
+    }
+
+    await this.courseRepository.delete(id);
   }
 }

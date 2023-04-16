@@ -10,33 +10,81 @@ import {
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
+import { ErrorHandler } from 'src/error/ErrorHandler';
 
 @Controller('course')
 export class CourseController {
-  constructor(private readonly classService: CourseService) {}
+  constructor(private readonly courseService: CourseService) {}
 
   @Post()
-  create(@Body() createClassDto: CreateCourseDto) {
-    return this.classService.create(createClassDto);
+  async create(@Body() createCourseDto: CreateCourseDto) {
+    try {
+      const course = await this.courseService.create(createCourseDto);
+
+      return {
+        message: 'Course created successfully.',
+        course,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, this.create.name);
+    }
   }
 
   @Get()
-  findAll() {
-    return this.classService.findAll();
+  async findAll() {
+    try {
+      const courses = await this.courseService.findAll();
+
+      return {
+        message: 'Courses',
+        courses,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, this.findAll.name);
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.classService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    try {
+      const course = await this.courseService.findOne(id);
+
+      return {
+        message: 'Course',
+        course,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, this.findOne.name);
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClassDto: UpdateCourseDto) {
-    return this.classService.update(+id, updateClassDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateClassDto: UpdateCourseDto,
+  ) {
+    try {
+      const course = await this.courseService.update(id, updateClassDto);
+
+      return {
+        message: 'Course updated successfully.',
+        course,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, this.update.name);
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.classService.remove(+id);
+  async remove(@Param('id') id: string) {
+    try {
+      await this.courseService.remove(id);
+
+      return {
+        message: 'Course deleted successfully.',
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, this.remove.name);
+    }
   }
 }

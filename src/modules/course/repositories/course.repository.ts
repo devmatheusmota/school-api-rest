@@ -1,23 +1,13 @@
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Course } from '../entities/course.entity';
 import { ICourseRepository } from './course.repository.interface';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CourseRepository implements ICourseRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: Course): Promise<Course> {
-    // const classExists = await this.prisma.course.findFirst({
-    //   where: {
-    //     id: data.course_id,
-    //   },
-    // });
-
-    // if (!classExists) {
-    //   throw new NotFoundException('Course not found.');
-    // }
-
     const course = await this.prisma.course.create({
       data,
     });
@@ -58,5 +48,16 @@ export class CourseRepository implements ICourseRepository {
         id,
       },
     });
+  }
+
+  async checkIfCourseExists(name: string, year: number): Promise<boolean> {
+    const course = await this.prisma.course.findFirst({
+      where: {
+        name,
+        year,
+      },
+    });
+
+    return !!course;
   }
 }

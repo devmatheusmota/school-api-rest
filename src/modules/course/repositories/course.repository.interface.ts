@@ -6,4 +6,5 @@ export interface ICourseRepository {
   delete(id: string): Promise<void>;
   findById(id: string): Promise<Course | undefined>;
   findAll(): Promise<Course[]>;
+  checkIfCourseExists(name: string, year: number): Promise<boolean>;
 }

@@ -38,4 +38,10 @@ export class InMemoryCourseRepository implements ICourseRepository {
 
     this.course.splice(courseIndex, 1);
   }
+
+  async checkIfCourseExists(name: string): Promise<boolean> {
+    const course = this.course.find((course) => course.name === name);
+
+    return !!course;
+  }
 }
