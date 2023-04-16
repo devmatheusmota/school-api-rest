@@ -5,7 +5,6 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('v1');
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
@@ -17,6 +16,14 @@ async function bootstrap() {
     .addServer('http://localhost:3000/v1', 'Development')
     .setVersion('1.0.0')
     .addTag('default', 'Endpoints padrão')
+    .addTag('Student', 'Endpoints para gerenciar estudantes')
+    .addTag('Student-card', 'Endpoints para gerenciar carteira de estudantes')
+    .addTag('Teacher', 'Endpoints para gerenciar professores')
+    .addTag('Course', 'Endpoints para gerenciar cursos')
+    .addTag('Activity', 'Endpoints para gerenciar atividades')
+    .addTag('Subject', 'Endpoints para gerenciar matérias')
+    .addTag('Grade', 'Endpoints para gerenciar notas')
+    .addTag('Auth', 'Endpoints para autenticação')
     .build();
   const document = SwaggerModule.createDocument(app, config, {
     operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
@@ -25,6 +32,7 @@ async function bootstrap() {
     customSiteTitle: 'Desafio EMR - API',
   });
 
+  app.setGlobalPrefix('v1');
   await app.listen(3000);
 }
 bootstrap();

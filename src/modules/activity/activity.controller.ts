@@ -14,14 +14,18 @@ import { UpdateActivityDto } from './dto/update-activity.dto';
 import { ErrorHandler } from 'src/error/ErrorHandler';
 import { ROLE, Roles } from 'src/roles/roles.decorator';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Activity')
 @UseGuards(AuthGuard('jwt'))
 @Controller('activity')
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Post()
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Criação de Atividades' })
   async create(@Body() createActivityDto: CreateActivityDto) {
     try {
       const activity = await this.activityService.create(createActivityDto);
@@ -37,6 +41,8 @@ export class ActivityController {
 
   @Get()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Listagem de Atividades' })
   async findAll() {
     try {
       const activities = await this.activityService.findAll();
@@ -52,6 +58,8 @@ export class ActivityController {
 
   @Get(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Listagem de Atividades pelo ID' })
   async findOne(@Param('id') id: string) {
     try {
       const activity = await this.activityService.findOne(id);
@@ -67,6 +75,8 @@ export class ActivityController {
 
   @Get('course/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Curso' })
   async findByCourseId(@Param('id') id: string) {
     try {
       const activities = await this.activityService.findByCourseId(id);
@@ -82,6 +92,8 @@ export class ActivityController {
 
   @Get('student/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Estudante' })
   async findByStudentId(@Param('id') id: string) {
     try {
       const activities = await this.activityService.findByStudentId(id);
@@ -97,6 +109,8 @@ export class ActivityController {
 
   @Get('teacher/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Professor' })
   async findByTeacherId(@Param('id') id: string) {
     try {
       const activities = await this.activityService.findByTeacherId(id);
@@ -110,8 +124,10 @@ export class ActivityController {
     }
   }
 
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Patch(':id')
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Atualização de Atividades' })
   async update(
     @Param('id') id: string,
     @Body() updateActivityDto: UpdateActivityDto,
@@ -130,6 +146,8 @@ export class ActivityController {
 
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Delete(':id')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Remoção de Atividades' })
   async remove(@Param('id') id: string) {
     try {
       await this.activityService.remove(id);
