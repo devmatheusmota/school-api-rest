@@ -39,7 +39,10 @@ export class InMemoryGradeRepository implements IGradeRepository {
     this.grade.splice(gradeIndex, 1);
   }
 
-  checkIfExists(student_id: string, activity_id: string): Promise<boolean> {
+  async checkIfExists(
+    _student_id: string,
+    _activity_id: string,
+  ): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
 }
