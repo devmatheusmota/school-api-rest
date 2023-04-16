@@ -31,6 +31,16 @@ export class SubjectRepository implements ISubjectRepository {
     return students;
   }
 
+  async findByName(name: string): Promise<Subject> {
+    const subject = await this.prisma.subject.findFirst({
+      where: {
+        name,
+      },
+    });
+
+    return subject;
+  }
+
   async update(id: string, data: Subject): Promise<Subject> {
     const subject = await this.prisma.subject.update({
       where: {

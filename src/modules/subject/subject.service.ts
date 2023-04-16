@@ -11,6 +11,14 @@ export class SubjectService {
   ) {}
 
   async create(createSubjectDto: CreateSubjectDto) {
+    const subjectExists = await this.subjectRepository.findByName(
+      createSubjectDto.name,
+    );
+
+    if (subjectExists) {
+      throw new NotFoundException('Subject already exists');
+    }
+
     const subject = await this.subjectRepository.create(createSubjectDto);
 
     return subject;

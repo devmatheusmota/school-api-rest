@@ -40,4 +40,10 @@ export class InMemorySubjectRepository implements ISubjectRepository {
 
     this.subject.splice(subjectIndex, 1);
   }
+
+  async findByName(name: string): Promise<Subject> {
+    const subject = this.subject.find((subject) => subject.name === name);
+
+    return subject;
+  }
 }

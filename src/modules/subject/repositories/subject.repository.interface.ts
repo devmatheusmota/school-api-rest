@@ -6,4 +6,5 @@ export interface ISubjectRepository {
   delete(id: string): Promise<void>;
   findById(id: string): Promise<Subject | undefined>;
   findAll(): Promise<Subject[]>;
+  findByName(name: string): Promise<Subject | undefined>;
 }
