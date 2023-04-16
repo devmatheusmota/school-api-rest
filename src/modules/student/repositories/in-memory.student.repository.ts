@@ -50,6 +50,12 @@ export class InMemoryStudentRepository implements IStudentRepository {
   }
 
   async checkIfEmailExists(_email: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    const student = this.students.find((student) => student.email === _email);
+
+    if (student) {
+      return true;
+    }
+
+    return false;
   }
 }
