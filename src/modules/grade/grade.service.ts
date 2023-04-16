@@ -1,26 +1,74 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateGradeDto } from './dto/create-grade.dto';
 import { UpdateGradeDto } from './dto/update-grade.dto';
+import { IGradeRepository } from './repositories/grade.repository.interface';
 
 @Injectable()
 export class GradeService {
-  create(createGradeDto: CreateGradeDto) {
-    return 'This action adds a new grade';
+  constructor(
+    @Inject('GradeRepository')
+    private readonly gradeRepository: IGradeRepository,
+  ) {}
+
+  async create(createGradeDto: CreateGradeDto) {
+    const gradeExists = await this.gradeRepository.checkIfExists(
+      createGradeDto.student_id,
+      createGradeDto.activity_id,
+    );
+
+    if (gradeExists) {
+      throw new BadRequestException('Grade already exists. You can update it.');
+    }
+
+    const grade = await this.gradeRepository.create(createGradeDto);
+
+    return grade;
   }
 
-  findAll() {
-    return `This action returns all grade`;
+  async findAll() {
+    const grade = await this.gradeRepository.findAll();
+
+    if (grade.length === 0) {
+      throw new NotFoundException('No grades found');
+    }
+
+    return grade;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} grade`;
+  async findOne(id: string) {
+    const grade = await this.gradeRepository.findById(id);
+
+    if (!grade) {
+      throw new NotFoundException('Grade not found');
+    }
+
+    return grade;
   }
 
-  update(id: number, updateGradeDto: UpdateGradeDto) {
-    return `This action updates a #${id} grade`;
+  async update(id: string, updateGradeDto: UpdateGradeDto) {
+    const gradeExists = await this.gradeRepository.findById(id);
+
+    if (!gradeExists) {
+      throw new NotFoundException('Grade not found');
+    }
+
+    const grade = await this.gradeRepository.update(id, updateGradeDto);
+
+    return grade;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} grade`;
+  async remove(id: string) {
+    const gradeExists = await this.gradeRepository.findById(id);
+
+    if (!gradeExists) {
+      throw new NotFoundException('Grade not found');
+    }
+
+    await this.gradeRepository.delete(id);
   }
 }

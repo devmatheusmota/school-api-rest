@@ -1,34 +1,90 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { GradeService } from './grade.service';
 import { CreateGradeDto } from './dto/create-grade.dto';
 import { UpdateGradeDto } from './dto/update-grade.dto';
+import { ErrorHandler } from 'src/error/ErrorHandler';
 
 @Controller('grade')
 export class GradeController {
   constructor(private readonly gradeService: GradeService) {}
 
   @Post()
-  create(@Body() createGradeDto: CreateGradeDto) {
-    return this.gradeService.create(createGradeDto);
+  async create(@Body() createGradeDto: CreateGradeDto) {
+    try {
+      const grade = await this.gradeService.create(createGradeDto);
+
+      return {
+        message: 'Grade created successfully.',
+        grade,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'create');
+    }
   }
 
   @Get()
-  findAll() {
-    return this.gradeService.findAll();
+  async findAll() {
+    try {
+      const grades = await this.gradeService.findAll();
+
+      return {
+        message: 'Grades',
+        grades,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'findAll');
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.gradeService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    try {
+      const grade = await this.gradeService.findOne(id);
+
+      return {
+        message: 'Grade',
+        grade,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'findOne');
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGradeDto: UpdateGradeDto) {
-    return this.gradeService.update(+id, updateGradeDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateGradeDto: UpdateGradeDto,
+  ) {
+    try {
+      const grade = await this.gradeService.update(id, updateGradeDto);
+
+      return {
+        message: 'Grade updated successfully.',
+        grade,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'update');
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.gradeService.remove(+id);
+  async remove(@Param('id') id: string) {
+    try {
+      await this.gradeService.remove(id);
+
+      return {
+        message: 'Grade deleted successfully.',
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'remove');
+    }
   }
 }

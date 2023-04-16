@@ -82,6 +82,8 @@ model Grade {
   value       Float
   student_id  String
   activity_id String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   Student     Student  @relation(fields: [student_id], references: [id]) // 1xn relation
   Activity    Activity @relation(fields: [activity_id], references: [id]) // 1xn relation
 }
