@@ -16,14 +16,23 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 import { ErrorHandler } from 'src/error/ErrorHandler';
 import { AuthGuard } from '@nestjs/passport';
 import { ROLE, Roles } from 'src/roles/roles.decorator';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('Student')
+@ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
-  @Roles(ROLE.ADMIN)
   @Post()
+  @Roles(ROLE.ADMIN)
+  @ApiOperation({ summary: 'Criação de Alunos' })
   async create(@Body() createStudentDto: CreateStudentDto) {
     try {
       const student = await this.studentService.create(createStudentDto);
@@ -40,8 +49,9 @@ export class StudentController {
     }
   }
 
-  @Roles(ROLE.ADMIN)
   @Get()
+  @Roles(ROLE.ADMIN)
+  @ApiOperation({ summary: 'Listagem de Alunos' })
   async findAll() {
     try {
       const students = await this.studentService.findAll();
@@ -60,8 +70,10 @@ export class StudentController {
     }
   }
 
-  @Roles(ROLE.ADMIN)
   @Get(':id')
+  @Roles(ROLE.ADMIN)
+  @ApiOperation({ summary: 'Listagem de Alunos pelo ID' })
+  @ApiParam({ name: 'id', description: 'ID do Aluno' })
   async findOne(@Param('id') id: string) {
     try {
       const student = await this.studentService.findOne(id);
@@ -78,8 +90,10 @@ export class StudentController {
     }
   }
 
-  @Roles(ROLE.ADMIN)
   @Patch(':id')
+  @Roles(ROLE.ADMIN)
+  @ApiOperation({ summary: 'Atualização de Alunos' })
+  @ApiParam({ name: 'id', description: 'ID do Aluno' })
   async update(
     @Param('id') id: string,
     @Body() updateStudentDto: UpdateStudentDto,
@@ -99,8 +113,10 @@ export class StudentController {
     }
   }
 
-  @Roles(ROLE.ADMIN)
   @Delete(':id')
+  @Roles(ROLE.ADMIN)
+  @ApiOperation({ summary: 'Remoção de Alunos' })
+  @ApiParam({ name: 'id', description: 'ID do Aluno' })
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id') id: string) {
     try {
