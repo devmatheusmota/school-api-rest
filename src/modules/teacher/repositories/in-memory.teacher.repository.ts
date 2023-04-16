@@ -3,51 +3,47 @@ import { ITeacherRepository } from './teacher.repository.interface';
 import { Teacher } from '../entities/teacher.entity';
 
 export class InMemoryTeacherRepository implements ITeacherRepository {
-  private students: Teacher[] = [];
+  private teacher: Teacher[] = [];
 
   async create(data: Teacher): Promise<Teacher> {
     const teacher = new Teacher(data);
 
     teacher.id = randomUUID();
 
-    this.students.push(teacher);
+    this.teacher.push(teacher);
 
     return teacher;
   }
 
   async findById(id: string): Promise<Teacher> {
-    const teacher = this.students.find((teacher) => teacher.id === id);
+    const teacher = this.teacher.find((teacher) => teacher.id === id);
 
     return teacher;
   }
 
   async findByEmail(email: string): Promise<Teacher> {
-    const teacher = this.students.find((teacher) => teacher.email === email);
+    const teacher = this.teacher.find((teacher) => teacher.email === email);
 
     return teacher;
   }
 
   async findAll(): Promise<Teacher[]> {
-    const students = this.students;
+    const teacher = this.teacher;
 
-    return students;
+    return teacher;
   }
 
   async update(id: string, teacher: Teacher): Promise<Teacher> {
-    const studentIndex = this.students.findIndex(
-      (teacher) => teacher.id === id,
-    );
-    teacher.id = this.students[studentIndex].id;
-    this.students[studentIndex] = teacher;
+    const teacherIndex = this.teacher.findIndex((teacher) => teacher.id === id);
+    teacher.id = this.teacher[teacherIndex].id;
+    this.teacher[teacherIndex] = teacher;
 
     return teacher;
   }
 
   async delete(id: string): Promise<void> {
-    const studentIndex = this.students.findIndex(
-      (teacher) => teacher.id === id,
-    );
+    const teacherIndex = this.teacher.findIndex((teacher) => teacher.id === id);
 
-    this.students.splice(studentIndex, 1);
+    this.teacher.splice(teacherIndex, 1);
   }
 }

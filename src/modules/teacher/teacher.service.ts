@@ -38,7 +38,12 @@ export class TeacherService {
       throw new NotFoundException('No teachers found!');
     }
 
-    return teachers;
+    return teachers.map((teacher) => {
+      return {
+        ...teacher,
+        password: undefined,
+      };
+    });
   }
 
   async findOne(id: string) {
@@ -48,7 +53,7 @@ export class TeacherService {
       throw new NotFoundException('Teacher not found!');
     }
 
-    return teacher;
+    return { ...teacher, password: undefined };
   }
 
   async update(id: string, updateTeacherDto: UpdateTeacherDto) {
