@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Autenticação')
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -15,7 +15,7 @@ export class AuthController {
           type: 'string',
           example: 'johndoe@mail.com',
         },
-        senha: {
+        password: {
           type: 'string',
           example: '123456',
         },

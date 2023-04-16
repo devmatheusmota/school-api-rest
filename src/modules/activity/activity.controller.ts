@@ -14,7 +14,12 @@ import { UpdateActivityDto } from './dto/update-activity.dto';
 import { ErrorHandler } from 'src/error/ErrorHandler';
 import { ROLE, Roles } from 'src/roles/roles.decorator';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('Activity')
 @UseGuards(AuthGuard('jwt'))
@@ -60,6 +65,7 @@ export class ActivityController {
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID' })
+  @ApiParam({ name: 'id', example: '1', description: 'ID da Atividade' })
   async findOne(@Param('id') id: string) {
     try {
       const activity = await this.activityService.findOne(id);
@@ -77,6 +83,7 @@ export class ActivityController {
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Curso' })
+  @ApiParam({ name: 'id', example: '1', description: 'ID do Curso' })
   async findByCourseId(@Param('id') id: string) {
     try {
       const activities = await this.activityService.findByCourseId(id);
@@ -94,6 +101,7 @@ export class ActivityController {
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Estudante' })
+  @ApiParam({ name: 'id', example: '1', description: 'ID do Estudante' })
   async findByStudentId(@Param('id') id: string) {
     try {
       const activities = await this.activityService.findByStudentId(id);
@@ -111,6 +119,7 @@ export class ActivityController {
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Professor' })
+  @ApiParam({ name: 'id', example: '1', description: 'ID do Professor' })
   async findByTeacherId(@Param('id') id: string) {
     try {
       const activities = await this.activityService.findByTeacherId(id);
@@ -128,6 +137,7 @@ export class ActivityController {
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Atualização de Atividades' })
+  @ApiParam({ name: 'id', example: '1', description: 'ID da Atividade' })
   async update(
     @Param('id') id: string,
     @Body() updateActivityDto: UpdateActivityDto,
@@ -148,6 +158,7 @@ export class ActivityController {
   @Delete(':id')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Remoção de Atividades' })
+  @ApiParam({ name: 'id', example: '1', description: 'ID da Atividade' })
   async remove(@Param('id') id: string) {
     try {
       await this.activityService.remove(id);
