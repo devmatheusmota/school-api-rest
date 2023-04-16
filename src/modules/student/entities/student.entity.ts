@@ -1,6 +1,6 @@
-import { Address } from 'src/modules/address/entities/address.entity';
 import { Course } from 'src/modules/course/entities/course.entity';
 import { Grade } from 'src/modules/grade/entities/grade.entity';
+import { StudentCard } from 'src/modules/student-card/entities/student-card.entity';
 
 export class Student {
   public id?: string;
@@ -12,5 +12,5 @@ export class Student {
   public course_id?: string;
   public course?: Course;
   public grades?: Grade[];
-  public address?: Address;
+  public studentCard?: StudentCard;
 }

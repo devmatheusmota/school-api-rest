@@ -11,29 +11,25 @@ datasource db {
 }
 
 model Student {
-  id        String   @id @default(uuid())
-  name      String
-  email     String
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  course_id String?
-  Grade     Grade[] // 1xn relation
-  Course    Course?  @relation(fields: [course_id], references: [id])
-  Address   Address? // 1x1 relation
+  id          String       @id @default(uuid())
+  name        String
+  email       String
+  password    String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  course_id   String?
+  Grade       Grade[] // 1xn relation
+  Course      Course?      @relation(fields: [course_id], references: [id])
+  StudentCard StudentCard?
 }
 
-model Address {
+model StudentCard {
   id         String   @id @default(uuid())
-  street     String
-  number     Int
-  district   String
-  city       String
-  state      String
+  due_date   DateTime
+  student_id String   @unique
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  student_id String   @unique
-  Student    Student? @relation(fields: [student_id], references: [id]) // 1x1 relation
+  Student    Student  @relation(fields: [student_id], references: [id]) // 1x1 relation
 }
 
 model Teacher {
