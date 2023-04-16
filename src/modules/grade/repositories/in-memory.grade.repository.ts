@@ -3,40 +3,64 @@ import { IGradeRepository } from './grade.repository.interface';
 import { Grade } from '../entities/grade.entity';
 
 export class InMemoryGradeRepository implements IGradeRepository {
-  private grade: Grade[] = [];
+  private grades: Grade[] = [];
 
   async create(data: Grade): Promise<Grade> {
     data.id = randomUUID();
 
-    this.grade.push(data);
+    this.grades.push(data);
 
     return data;
   }
 
   async findById(id: string): Promise<Grade> {
-    const grade = this.grade.find((grade) => grade.id === id);
+    const grade = this.grades.find((grade) => grade.id === id);
 
     return grade;
   }
 
   async findAll(): Promise<Grade[]> {
-    const grade = this.grade;
+    const grade = this.grades;
 
     return grade;
   }
 
+  async findByStudentId(student_id: string): Promise<Grade[]> {
+    const grades = this.grades.filter(
+      (grade) => grade.student_id === student_id,
+    );
+
+    return grades;
+  }
+
+  async findByActivityId(activity_id: string): Promise<Grade[]> {
+    const grades = this.grades.filter(
+      (grade) => grade.activity_id === activity_id,
+    );
+
+    return grades;
+  }
+
+  async findByCourseId(course_id: string): Promise<Grade[]> {
+    const grades = this.grades.filter(
+      (grade) => grade.activity.course_id === course_id,
+    );
+
+    return grades;
+  }
+
   async update(id: string, grade: Grade): Promise<Grade> {
-    const gradeIndex = this.grade.findIndex((grade) => grade.id === id);
-    grade.id = this.grade[gradeIndex].id;
-    this.grade[gradeIndex] = grade;
+    const gradeIndex = this.grades.findIndex((grade) => grade.id === id);
+    grade.id = this.grades[gradeIndex].id;
+    this.grades[gradeIndex] = grade;
 
     return grade;
   }
 
   async delete(id: string): Promise<void> {
-    const gradeIndex = this.grade.findIndex((grade) => grade.id === id);
+    const gradeIndex = this.grades.findIndex((grade) => grade.id === id);
 
-    this.grade.splice(gradeIndex, 1);
+    this.grades.splice(gradeIndex, 1);
   }
 
   async checkIfExists(

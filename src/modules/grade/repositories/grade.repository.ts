@@ -51,6 +51,38 @@ export class GradeRepository implements IGradeRepository {
     return students;
   }
 
+  async findByStudentId(student_id: string): Promise<Grade[]> {
+    const grades = await this.prisma.grade.findMany({
+      where: {
+        student_id,
+      },
+    });
+
+    return grades;
+  }
+
+  async findByActivityId(activity_id: string): Promise<Grade[]> {
+    const grades = await this.prisma.grade.findMany({
+      where: {
+        activity_id,
+      },
+    });
+
+    return grades;
+  }
+
+  async findByCourseId(course_id: string): Promise<Grade[]> {
+    const grades = await this.prisma.grade.findMany({
+      where: {
+        Activity: {
+          course_id,
+        },
+      },
+    });
+
+    return grades;
+  }
+
   async update(id: string, data: Grade): Promise<Grade> {
     const grade = await this.prisma.grade.update({
       where: {

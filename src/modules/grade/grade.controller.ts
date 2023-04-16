@@ -31,7 +31,7 @@ export class GradeController {
         grade,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'create');
+      new ErrorHandler(error, this.constructor.name, this.create.name);
     }
   }
 
@@ -46,7 +46,7 @@ export class GradeController {
         grades,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findAll');
+      new ErrorHandler(error, this.constructor.name, this.findAll.name);
     }
   }
 
@@ -61,7 +61,56 @@ export class GradeController {
         grade,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findOne');
+      new ErrorHandler(error, this.constructor.name, this.findOne.name);
+    }
+  }
+
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Get('student/:id')
+  async findByStudentId(@Param('id') id: string) {
+    try {
+      const grades = await this.gradeService.findByStudentId(id);
+
+      return {
+        message: 'Grades',
+        grades,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, this.findByStudentId.name);
+    }
+  }
+
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Get('activity/:id')
+  async findByActivityId(@Param('id') id: string) {
+    try {
+      const grades = await this.gradeService.findByActivityId(id);
+
+      return {
+        message: 'Grades',
+        grades,
+      };
+    } catch (error) {
+      new ErrorHandler(
+        error,
+        this.constructor.name,
+        this.findByActivityId.name,
+      );
+    }
+  }
+
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Get('course/:id')
+  async findByCourseId(@Param('id') id: string) {
+    try {
+      const grades = await this.gradeService.findByCourseId(id);
+
+      return {
+        message: 'Grades',
+        grades,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, this.findByCourseId.name);
     }
   }
 

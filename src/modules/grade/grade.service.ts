@@ -50,6 +50,36 @@ export class GradeService {
     return grade;
   }
 
+  async findByStudentId(studentId: string) {
+    const grades = await this.gradeRepository.findByStudentId(studentId);
+
+    if (grades.length === 0) {
+      throw new NotFoundException('No grades found');
+    }
+
+    return grades;
+  }
+
+  async findByActivityId(activityId: string) {
+    const grades = await this.gradeRepository.findByActivityId(activityId);
+
+    if (grades.length === 0) {
+      throw new NotFoundException('No grades found');
+    }
+
+    return grades;
+  }
+
+  async findByCourseId(courseId: string) {
+    const grades = await this.gradeRepository.findByCourseId(courseId);
+
+    if (grades.length === 0) {
+      throw new NotFoundException('No grades found');
+    }
+
+    return grades;
+  }
+
   async update(id: string, updateGradeDto: UpdateGradeDto) {
     const gradeExists = await this.gradeRepository.findById(id);
 
