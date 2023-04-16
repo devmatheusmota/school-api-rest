@@ -7,9 +7,13 @@ import { SubjectModule } from './modules/subject/subject.module';
 import { ClassModule } from './modules/class/class.module';
 import { ActivityModule } from './modules/activity/activity.module';
 import { GradeModule } from './modules/grade/grade.module';
+import { AppController } from './app.controller';
+import { ConfigModule } from '@nestjs/config';
+import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     StudentModule,
     AddressModule,
     TeacherModule,
@@ -18,8 +22,8 @@ import { GradeModule } from './modules/grade/grade.module';
     ActivityModule,
     GradeModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [PrismaService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

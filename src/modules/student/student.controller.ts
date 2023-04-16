@@ -1,34 +1,103 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
+import { ErrorHandler } from 'src/error/ErrorHandler';
 
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
   @Post()
-  create(@Body() createStudentDto: CreateStudentDto) {
-    return this.studentService.create(createStudentDto);
+  async create(@Body() createStudentDto: CreateStudentDto) {
+    try {
+      const student = await this.studentService.create(createStudentDto);
+
+      return {
+        message: 'Student created successfully.',
+        student: {
+          ...student,
+          password: undefined,
+        },
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'create').throw();
+    }
   }
 
   @Get()
-  findAll() {
-    return this.studentService.findAll();
+  async findAll() {
+    try {
+      const students = await this.studentService.findAll();
+
+      return {
+        message: 'Students',
+        students: students.map((student) => {
+          return {
+            ...student,
+            password: undefined,
+          };
+        }),
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'findAll').throw();
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.studentService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    try {
+      const student = await this.studentService.findOne(id);
+
+      return {
+        message: 'Student',
+        student: {
+          ...student,
+          password: undefined,
+        },
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'findOne').throw();
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
-    return this.studentService.update(+id, updateStudentDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateStudentDto: UpdateStudentDto,
+  ) {
+    try {
+      const student = await this.studentService.update(id, updateStudentDto);
+
+      return {
+        message: 'Student updated successfully.',
+        student: {
+          ...student,
+          password: undefined,
+        },
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'update').throw();
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.studentService.remove(+id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id') id: string) {
+    try {
+      await this.studentService.remove(id);
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'remove').throw();
+    }
   }
 }

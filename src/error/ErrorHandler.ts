@@ -1,7 +1,11 @@
 import { HttpException } from '@nestjs/common';
 
 export class ErrorHandler {
-  constructor(private readonly error: any) {}
+  constructor(
+    private readonly error: any,
+    private readonly controller: any,
+    private readonly method: any,
+  ) {}
 
   public throw() {
     throw new HttpException(
@@ -10,6 +14,7 @@ export class ErrorHandler {
         message:
           this.error.message || 'Erro inesperado. Tente novamente mais tarde.',
         error: this.error.response?.error,
+        where: `${this.controller} -> ${this.method}`,
       },
       this.error.status,
     );
