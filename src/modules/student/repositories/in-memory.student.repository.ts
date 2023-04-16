@@ -6,13 +6,11 @@ export class InMemoryStudentRepository implements IStudentRepository {
   private students: Student[] = [];
 
   async create(data: Student): Promise<Student> {
-    const student = new Student(data);
+    data.id = randomUUID();
 
-    student.id = randomUUID();
+    this.students.push(data);
 
-    this.students.push(student);
-
-    return student;
+    return data;
   }
 
   async findById(id: string): Promise<Student> {

@@ -6,13 +6,11 @@ export class InMemoryGradeRepository implements IGradeRepository {
   private grade: Grade[] = [];
 
   async create(data: Grade): Promise<Grade> {
-    const grade = new Grade(data);
+    data.id = randomUUID();
 
-    grade.id = randomUUID();
+    this.grade.push(data);
 
-    this.grade.push(grade);
-
-    return grade;
+    return data;
   }
 
   async findById(id: string): Promise<Grade> {

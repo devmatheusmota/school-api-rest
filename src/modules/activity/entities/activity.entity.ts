@@ -1,3 +1,6 @@
+import { Class } from 'src/modules/class/entities/class.entity';
+import { Grade } from 'src/modules/grade/entities/grade.entity';
+
 export class Activity {
   public id?: string;
   public name: string;
@@ -6,8 +9,6 @@ export class Activity {
   public class_id: string;
   public createdAt?: Date;
   public updatedAt?: Date;
-
-  constructor(props: Omit<Activity, 'id' | 'createdAt' | 'updatedAt'>) {
-    Object.assign(this, props);
-  }
+  public class?: Class;
+  public grades?: Grade[];
 }

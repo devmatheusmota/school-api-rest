@@ -6,13 +6,11 @@ export class InMemoryTeacherRepository implements ITeacherRepository {
   private teacher: Teacher[] = [];
 
   async create(data: Teacher): Promise<Teacher> {
-    const teacher = new Teacher(data);
+    data.id = randomUUID();
 
-    teacher.id = randomUUID();
+    this.teacher.push(data);
 
-    this.teacher.push(teacher);
-
-    return teacher;
+    return data;
   }
 
   async findById(id: string): Promise<Teacher> {

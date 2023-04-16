@@ -1,3 +1,7 @@
+import { Address } from 'src/modules/address/entities/address.entity';
+import { Class } from 'src/modules/class/entities/class.entity';
+import { Grade } from 'src/modules/grade/entities/grade.entity';
+
 export class Student {
   public id?: string;
   public name: string;
@@ -5,8 +9,8 @@ export class Student {
   public password: string;
   public createdAt?: Date;
   public updatedAt?: Date;
-
-  constructor(props: Omit<Student, 'id' | 'createdAt' | 'updatedAt'>) {
-    Object.assign(this, props);
-  }
+  public class_id?: string;
+  public class?: Class;
+  public grades?: Grade[];
+  public address?: Address;
 }

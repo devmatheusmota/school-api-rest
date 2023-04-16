@@ -6,13 +6,11 @@ export class InMemoryActivityRepository implements IActivityRepository {
   private activity: Activity[] = [];
 
   async create(data: Activity): Promise<Activity> {
-    const activity = new Activity(data);
+    data.id = randomUUID();
 
-    activity.id = randomUUID();
+    this.activity.push(data);
 
-    this.activity.push(activity);
-
-    return activity;
+    return data;
   }
 
   async findById(id: string): Promise<Activity> {

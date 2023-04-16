@@ -1,12 +1,13 @@
+import { Activity } from 'src/modules/activity/entities/activity.entity';
+import { Student } from 'src/modules/student/entities/student.entity';
+
 export class Grade {
   public id?: string;
   public value: number;
   public student_id: string;
   public activity_id: string;
-  public created_at?: Date;
-  public updated_at?: Date;
-
-  constructor(props: Omit<Grade, 'id' | 'created_at' | 'updated_at'>) {
-    Object.assign(this, props);
-  }
+  public createdAt?: Date;
+  public updatedAt?: Date;
+  public student?: Student;
+  public activity?: Activity;
 }
