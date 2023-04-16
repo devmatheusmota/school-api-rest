@@ -3,7 +3,7 @@ import { hash } from 'bcrypt';
 
 const prisma = new PrismaClient();
 
-export class seed {
+export class Seed {
   constructor(private readonly prisma: PrismaClient) {}
   async seed() {
     await this.prisma.teacher.create({
@@ -14,7 +14,23 @@ export class seed {
         role: 'ADMIN',
       },
     });
+
+    await this.prisma.teacher.create({
+      data: {
+        name: 'teacher',
+        email: 'teacher@teacher.com.br',
+        password: await hash('teacher', 10),
+      },
+    });
+
+    await this.prisma.student.create({
+      data: {
+        name: 'student',
+        email: 'student@student.com.br',
+        password: await hash('student', 10),
+      },
+    });
   }
 }
 
-new seed(prisma).seed();
+new Seed(prisma).seed();
