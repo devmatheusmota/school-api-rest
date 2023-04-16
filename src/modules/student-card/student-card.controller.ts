@@ -6,16 +6,21 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { StudentCardService } from './student-card.service';
 import { CreateStudentCardDto } from './dto/create-student-card.dto';
 import { UpdateStudentCardDto } from './dto/update-student-card.dto';
 import { ErrorHandler } from 'src/error/ErrorHandler';
+import { AuthGuard } from '@nestjs/passport';
+import { ROLE, Roles } from 'src/roles/roles.decorator';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('student-card')
 export class StudentCardController {
   constructor(private readonly studentCardService: StudentCardService) {}
 
+  @Roles(ROLE.ADMIN)
   @Post()
   async create(@Body() createStudentCardDto: CreateStudentCardDto) {
     try {
@@ -32,6 +37,7 @@ export class StudentCardController {
     }
   }
 
+  @Roles(ROLE.ADMIN)
   @Get()
   async findAll() {
     try {
@@ -46,6 +52,7 @@ export class StudentCardController {
     }
   }
 
+  @Roles(ROLE.ADMIN)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
@@ -60,6 +67,7 @@ export class StudentCardController {
     }
   }
 
+  @Roles(ROLE.ADMIN)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -80,6 +88,7 @@ export class StudentCardController {
     }
   }
 
+  @Roles(ROLE.ADMIN)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {

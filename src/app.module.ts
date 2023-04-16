@@ -11,6 +11,9 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma/prisma.service';
 import { StudentCardModule } from './modules/student-card/student-card.module';
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './roles/roles.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -25,7 +28,13 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [PrismaService],
+  providers: [
+    PrismaService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

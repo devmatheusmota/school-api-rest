@@ -8,16 +8,21 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { ErrorHandler } from 'src/error/ErrorHandler';
+import { AuthGuard } from '@nestjs/passport';
+import { ROLE, Roles } from 'src/roles/roles.decorator';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
+  @Roles(ROLE.ADMIN)
   @Post()
   async create(@Body() createStudentDto: CreateStudentDto) {
     try {
@@ -35,6 +40,7 @@ export class StudentController {
     }
   }
 
+  @Roles(ROLE.ADMIN)
   @Get()
   async findAll() {
     try {
@@ -54,6 +60,7 @@ export class StudentController {
     }
   }
 
+  @Roles(ROLE.ADMIN)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
@@ -71,6 +78,7 @@ export class StudentController {
     }
   }
 
+  @Roles(ROLE.ADMIN)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -91,6 +99,7 @@ export class StudentController {
     }
   }
 
+  @Roles(ROLE.ADMIN)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id') id: string) {

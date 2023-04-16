@@ -7,4 +7,5 @@ export interface ITeacherRepository {
   findById(id: string): Promise<Teacher | undefined>;
   findByEmail(email: string): Promise<Teacher | undefined>;
   findAll(): Promise<Teacher[]>;
+  checkIfEmailExists(email: string): Promise<boolean>;
 }

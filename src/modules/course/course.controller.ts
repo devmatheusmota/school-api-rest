@@ -6,16 +6,21 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { ErrorHandler } from 'src/error/ErrorHandler';
+import { ROLE, Roles } from 'src/roles/roles.decorator';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('course')
+@UseGuards(AuthGuard('jwt'))
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Post()
   async create(@Body() createCourseDto: CreateCourseDto) {
     try {
@@ -30,6 +35,7 @@ export class CourseController {
     }
   }
 
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Get()
   async findAll() {
     try {
@@ -44,6 +50,7 @@ export class CourseController {
     }
   }
 
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
@@ -58,6 +65,7 @@ export class CourseController {
     }
   }
 
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -75,6 +83,7 @@ export class CourseController {
     }
   }
 
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {

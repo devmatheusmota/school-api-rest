@@ -35,6 +35,22 @@ export class TeacherRepository implements ITeacherRepository {
     return teacher;
   }
 
+  async checkIfEmailExists(email: string): Promise<boolean> {
+    const student = await this.prisma.student.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    const teacher = await this.prisma.teacher.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    return !!student || !!teacher;
+  }
+
   async findAll(): Promise<Teacher[]> {
     const students = await this.prisma.teacher.findMany();
 

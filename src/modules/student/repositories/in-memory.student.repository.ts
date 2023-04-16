@@ -48,4 +48,8 @@ export class InMemoryStudentRepository implements IStudentRepository {
 
     this.students.splice(studentIndex, 1);
   }
+
+  async checkIfEmailExists(email: string): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
 }

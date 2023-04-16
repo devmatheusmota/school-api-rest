@@ -6,16 +6,21 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 import { ErrorHandler } from 'src/error/ErrorHandler';
+import { ROLE, Roles } from 'src/roles/roles.decorator';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('activity')
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Post()
   async create(@Body() createActivityDto: CreateActivityDto) {
     try {
@@ -31,6 +36,7 @@ export class ActivityController {
   }
 
   @Get()
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   async findAll() {
     try {
       const activities = await this.activityService.findAll();
@@ -45,6 +51,7 @@ export class ActivityController {
   }
 
   @Get(':id')
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   async findOne(@Param('id') id: string) {
     try {
       const activity = await this.activityService.findOne(id);
@@ -58,6 +65,7 @@ export class ActivityController {
     }
   }
 
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -75,6 +83,7 @@ export class ActivityController {
     }
   }
 
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {

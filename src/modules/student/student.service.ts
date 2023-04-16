@@ -19,12 +19,12 @@ export class StudentService {
   async create(createStudentDto: CreateStudentDto) {
     createStudentDto.password = await hash(createStudentDto.password, 10);
 
-    const studentExists = await this.studentRepository.findByEmail(
+    const emailExists = await this.studentRepository.checkIfEmailExists(
       createStudentDto.email,
     );
 
-    if (studentExists) {
-      throw new BadRequestException('Student already exists!');
+    if (emailExists) {
+      throw new BadRequestException('Email already in use!');
     }
 
     const student = await this.studentRepository.create(createStudentDto);
@@ -56,10 +56,6 @@ export class StudentService {
 
   async findByEmail(email: string) {
     const student = await this.studentRepository.findByEmail(email);
-
-    if (!student) {
-      throw new NotFoundException('Student not found!');
-    }
 
     return student;
   }

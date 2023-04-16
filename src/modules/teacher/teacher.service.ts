@@ -17,14 +17,15 @@ export class TeacherService {
   ) {}
 
   async create(createTeacherDto: CreateTeacherDto) {
-    const teacherExists = await this.teacherRepository.findByEmail(
+    createTeacherDto.password = await hash(createTeacherDto.password, 10);
+
+    const emailExists = await this.teacherRepository.checkIfEmailExists(
       createTeacherDto.email,
     );
-    if (teacherExists) {
+
+    if (emailExists) {
       throw new BadRequestException('Teacher already exists!');
     }
-
-    createTeacherDto.password = await hash(createTeacherDto.password, 10);
 
     const teacher = await this.teacherRepository.create(createTeacherDto);
 
@@ -58,10 +59,6 @@ export class TeacherService {
 
   async findByEmail(email: string) {
     const teacher = await this.teacherRepository.findByEmail(email);
-
-    if (!teacher) {
-      throw new NotFoundException('Teacher not found!');
-    }
 
     return teacher;
   }

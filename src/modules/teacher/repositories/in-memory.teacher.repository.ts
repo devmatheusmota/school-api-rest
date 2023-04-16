@@ -44,4 +44,8 @@ export class InMemoryTeacherRepository implements ITeacherRepository {
 
     this.teacher.splice(teacherIndex, 1);
   }
+
+  async checkIfEmailExists(email: string): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
 }
