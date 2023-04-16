@@ -17,8 +17,9 @@ model Student {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  class_id  String?
   Grade     Grade[] // 1xn relation
-  Class     Class[] // nxn relation
+  Class     Class?   @relation(fields: [class_id], references: [id])
   Address   Address? // 1x1 relation
 }
 
@@ -63,7 +64,7 @@ model Class {
   updatedAt DateTime   @updatedAt
   Teacher   Teacher[] // 1xn relation
   Activity  Activity[] // 1xn relation
-  Student   Student[] // nxn relation
+  Student   Student[] // 1xn relation
 }
 
 model Activity {
