@@ -5,9 +5,7 @@ export class ErrorHandler {
     private readonly error: any,
     private readonly controller: any,
     private readonly method: any,
-  ) {}
-
-  public throw() {
+  ) {
     throw new HttpException(
       {
         status: this.error.status,

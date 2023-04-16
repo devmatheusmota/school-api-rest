@@ -36,13 +36,14 @@ model Address {
 }
 
 model Teacher {
-  id       String    @id @default(uuid())
-  name     String
-  email    String
-  password String
-  class_id String?
-  Subject  Subject[] // 1xn relation
-  Class    Class?    @relation(fields: [class_id], references: [id]) // 1xn relation
+  id        String    @id @default(uuid())
+  name      String
+  email     String
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Subject   Subject[] // 1xn relation
+  Class     Class[] // nxn relation
 }
 
 model Subject {

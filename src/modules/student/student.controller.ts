@@ -31,7 +31,7 @@ export class StudentController {
         },
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'create').throw();
+      new ErrorHandler(error, this.constructor.name, 'create');
     }
   }
 
@@ -50,7 +50,7 @@ export class StudentController {
         }),
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findAll').throw();
+      new ErrorHandler(error, this.constructor.name, 'findAll');
     }
   }
 
@@ -67,7 +67,7 @@ export class StudentController {
         },
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findOne').throw();
+      new ErrorHandler(error, this.constructor.name, 'findOne');
     }
   }
 
@@ -87,7 +87,7 @@ export class StudentController {
         },
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'update').throw();
+      new ErrorHandler(error, this.constructor.name, 'update');
     }
   }
 
@@ -97,7 +97,7 @@ export class StudentController {
     try {
       await this.studentService.remove(id);
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'remove').throw();
+      new ErrorHandler(error, this.constructor.name, 'remove');
     }
   }
 }

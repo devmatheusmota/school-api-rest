@@ -65,6 +65,19 @@ export class StudentService {
       updateStudentDto.password = await hash(updateStudentDto.password, 10);
     }
 
+    if (
+      updateStudentDto.email &&
+      updateStudentDto.email !== studentExists.email
+    ) {
+      const studentExists = await this.studentRepository.findByEmail(
+        updateStudentDto.email,
+      );
+
+      if (studentExists) {
+        throw new BadRequestException('Email already in use.');
+      }
+    }
+
     const student = await this.studentRepository.update(id, updateStudentDto);
 
     return student;
