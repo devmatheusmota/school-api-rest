@@ -73,7 +73,11 @@ export class StudentController {
   @Get(':id')
   @Roles(ROLE.ADMIN)
   @ApiOperation({ summary: 'Listagem de Alunos pelo ID' })
-  @ApiParam({ name: 'id', description: 'ID do Aluno' })
+  @ApiParam({
+    name: 'id',
+    description: 'ID do Aluno',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+  })
   async findOne(@Param('id') id: string) {
     try {
       const student = await this.studentService.findOne(id);
@@ -93,7 +97,11 @@ export class StudentController {
   @Patch(':id')
   @Roles(ROLE.ADMIN)
   @ApiOperation({ summary: 'Atualização de Alunos' })
-  @ApiParam({ name: 'id', description: 'ID do Aluno' })
+  @ApiParam({
+    name: 'id',
+    description: 'ID do Aluno',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+  })
   async update(
     @Param('id') id: string,
     @Body() updateStudentDto: UpdateStudentDto,
@@ -116,7 +124,11 @@ export class StudentController {
   @Delete(':id')
   @Roles(ROLE.ADMIN)
   @ApiOperation({ summary: 'Remoção de Alunos' })
-  @ApiParam({ name: 'id', description: 'ID do Aluno' })
+  @ApiParam({
+    name: 'id',
+    description: 'ID do Aluno',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+  })
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id') id: string) {
     try {

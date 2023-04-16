@@ -112,6 +112,7 @@ export class CourseController {
     type: String,
     required: true,
     description: 'ID do Curso',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async findOne(@Param('id') id: string) {
     try {
@@ -134,6 +135,7 @@ export class CourseController {
     type: String,
     required: true,
     description: 'ID do Aluno',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async findByStudentId(@Param('id') id: string) {
     try {
@@ -156,6 +158,7 @@ export class CourseController {
     type: String,
     required: true,
     description: 'ID do Professor',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async findByTeacherId(@Param('id') id: string) {
     try {
@@ -178,6 +181,7 @@ export class CourseController {
     type: String,
     required: true,
     description: 'ID do Curso',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async update(
     @Param('id') id: string,
@@ -203,6 +207,7 @@ export class CourseController {
     type: String,
     required: true,
     description: 'ID do Curso',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async remove(@Param('id') id: string) {
     try {
