@@ -66,6 +66,36 @@ export class CourseController {
   }
 
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Get('student/:id')
+  async findByStudentId(@Param('id') id: string) {
+    try {
+      const course = await this.courseService.findByStudentId(id);
+
+      return {
+        message: 'Course',
+        course,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, this.findByStudentId.name);
+    }
+  }
+
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Get('teacher/:id')
+  async findByTeacherId(@Param('id') id: string) {
+    try {
+      const courses = await this.courseService.findByTeacherId(id);
+
+      return {
+        message: 'Courses',
+        courses,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, this.findByTeacherId.name);
+    }
+  }
+
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Patch(':id')
   async update(
     @Param('id') id: string,

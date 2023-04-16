@@ -44,4 +44,22 @@ export class InMemoryCourseRepository implements ICourseRepository {
 
     return !!course;
   }
+
+  async findByStudentId(studentId: string): Promise<Course> {
+    const course = this.course.find(
+      (course) => course.students[0].id === studentId,
+    );
+
+    return course;
+  }
+
+  async findByTeacherId(teacherId: string): Promise<Course[]> {
+    const courses = this.course.map((course) => {
+      if (course.teachers.map((teacher) => teacher.id === teacherId)) {
+        return course;
+      }
+    });
+
+    return courses;
+  }
 }

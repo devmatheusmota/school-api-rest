@@ -50,6 +50,26 @@ export class CourseService {
     return course;
   }
 
+  async findByStudentId(studentId: string) {
+    const course = await this.courseRepository.findByStudentId(studentId);
+
+    if (!course) {
+      throw new NotFoundException('Course not found.');
+    }
+
+    return course;
+  }
+
+  async findByTeacherId(teacherId: string) {
+    const courses = await this.courseRepository.findByTeacherId(teacherId);
+
+    if (courses.length === 0) {
+      throw new NotFoundException('No courses found.');
+    }
+
+    return courses;
+  }
+
   async update(id: string, updateCourseDto: UpdateCourseDto) {
     const courseExists = await this.courseRepository.findById(id);
 
