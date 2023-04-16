@@ -8,6 +8,22 @@ export class InMemoryActivityRepository implements IActivityRepository {
   async create(data: Activity): Promise<Activity> {
     data.id = randomUUID();
 
+    data.course = {
+      id: data.course_id,
+      name: 'Test Course',
+      year: 2021,
+    };
+
+    data.course.Student = [
+      {
+        id: 'Test Student ID',
+        name: 'Test Student',
+        email: 'test@test.com',
+        password: 'Test Password',
+        course_id: data.course_id,
+      },
+    ];
+
     this.activity.push(data);
 
     return data;

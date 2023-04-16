@@ -24,6 +24,8 @@ export class ActivityService {
     if (activities.length === 0) {
       throw new NotFoundException('No activities found.');
     }
+
+    return activities;
   }
 
   async findOne(id: string) {
