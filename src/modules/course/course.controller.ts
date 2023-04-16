@@ -24,6 +24,7 @@ import {
 } from '@nestjs/swagger';
 
 @ApiTags('Course')
+@ApiBearerAuth()
 @Controller('course')
 @UseGuards(AuthGuard('jwt'))
 export class CourseController {
@@ -31,7 +32,6 @@ export class CourseController {
 
   @Post()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Criação de Cursos' })
   async create(@Body() createCourseDto: CreateCourseDto) {
     try {
@@ -48,7 +48,6 @@ export class CourseController {
 
   @Post('student')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Adicionar/Remover Aluno ao Curso - Toggle' })
   async addStudentToCourse(@Body() addStudentToCourse: AddStudentToCourseDto) {
     try {
@@ -69,7 +68,6 @@ export class CourseController {
 
   @Post('teacher')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Adicionar/Remover Professor ao Curso - Toggle' })
   async addTeacherToCourse(
     @Body() addTeacherToCourseDto: AddTeacherToCourseDto,
@@ -92,7 +90,6 @@ export class CourseController {
 
   @Get()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Cursos' })
   async findAll() {
     try {
@@ -109,7 +106,6 @@ export class CourseController {
 
   @Get(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Cursos pelo ID' })
   @ApiParam({
     name: 'id',
@@ -132,7 +128,6 @@ export class CourseController {
 
   @Get('student/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Cursos pelo ID do Aluno' })
   @ApiParam({
     name: 'id',
@@ -155,7 +150,6 @@ export class CourseController {
 
   @Get('teacher/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Cursos pelo ID do Professor' })
   @ApiParam({
     name: 'id',
@@ -178,7 +172,6 @@ export class CourseController {
 
   @Patch(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Atualização de Cursos' })
   @ApiParam({
     name: 'id',
@@ -204,7 +197,6 @@ export class CourseController {
 
   @Delete(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Remoção de Cursos' })
   @ApiParam({
     name: 'id',

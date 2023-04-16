@@ -22,6 +22,7 @@ import {
 } from '@nestjs/swagger';
 
 @ApiTags('Activity')
+@ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Controller('activity')
 export class ActivityController {
@@ -29,7 +30,6 @@ export class ActivityController {
 
   @Post()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Criação de Atividades' })
   async create(@Body() createActivityDto: CreateActivityDto) {
     try {
@@ -46,7 +46,6 @@ export class ActivityController {
 
   @Get()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Atividades' })
   async findAll() {
     try {
@@ -63,7 +62,6 @@ export class ActivityController {
 
   @Get(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID' })
   @ApiParam({ name: 'id', example: '1', description: 'ID da Atividade' })
   async findOne(@Param('id') id: string) {
@@ -81,7 +79,6 @@ export class ActivityController {
 
   @Get('course/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Curso' })
   @ApiParam({ name: 'id', example: '1', description: 'ID do Curso' })
   async findByCourseId(@Param('id') id: string) {
@@ -99,7 +96,6 @@ export class ActivityController {
 
   @Get('student/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Estudante' })
   @ApiParam({ name: 'id', example: '1', description: 'ID do Estudante' })
   async findByStudentId(@Param('id') id: string) {
@@ -117,7 +113,6 @@ export class ActivityController {
 
   @Get('teacher/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Professor' })
   @ApiParam({ name: 'id', example: '1', description: 'ID do Professor' })
   async findByTeacherId(@Param('id') id: string) {
@@ -135,7 +130,6 @@ export class ActivityController {
 
   @Patch(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Atualização de Atividades' })
   @ApiParam({ name: 'id', example: '1', description: 'ID da Atividade' })
   async update(
@@ -156,7 +150,6 @@ export class ActivityController {
 
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Delete(':id')
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Remoção de Atividades' })
   @ApiParam({ name: 'id', example: '1', description: 'ID da Atividade' })
   async remove(@Param('id') id: string) {
