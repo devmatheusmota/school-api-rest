@@ -1,26 +1,60 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
+import { ISubjectRepository } from './repositories/subject.repository.interface';
 
 @Injectable()
 export class SubjectService {
-  create(createSubjectDto: CreateSubjectDto) {
-    return 'This action adds a new subject';
+  constructor(
+    @Inject('SubjectRepository')
+    private readonly subjectRepository: ISubjectRepository,
+  ) {}
+
+  async create(createSubjectDto: CreateSubjectDto) {
+    const subject = await this.subjectRepository.create(createSubjectDto);
+
+    return subject;
   }
 
-  findAll() {
-    return `This action returns all subject`;
+  async findAll() {
+    const subjects = await this.subjectRepository.findAll();
+
+    if (subjects.length === 0) {
+      throw new NotFoundException('No subjects found');
+    }
+
+    return subjects;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subject`;
+  async findOne(id: string) {
+    const subject = await this.subjectRepository.findById(id);
+
+    if (!subject) {
+      throw new NotFoundException('Subject not found');
+    }
+
+    return subject;
   }
 
-  update(id: number, updateSubjectDto: UpdateSubjectDto) {
-    return `This action updates a #${id} subject`;
+  async update(id: string, updateSubjectDto: UpdateSubjectDto) {
+    const subjectExists = await this.subjectRepository.findById(id);
+
+    if (!subjectExists) {
+      throw new NotFoundException('Subject not found');
+    }
+
+    const subject = await this.subjectRepository.update(id, updateSubjectDto);
+
+    return subject;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} subject`;
+  async remove(id: string) {
+    const subjectExists = await this.subjectRepository.findById(id);
+
+    if (!subjectExists) {
+      throw new NotFoundException('Subject not found');
+    }
+
+    await this.subjectRepository.delete(id);
   }
 }
