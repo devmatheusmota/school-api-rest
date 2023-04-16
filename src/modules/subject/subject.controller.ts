@@ -14,14 +14,23 @@ import { UpdateSubjectDto } from './dto/update-subject.dto';
 import { ErrorHandler } from 'src/error/ErrorHandler';
 import { AuthGuard } from '@nestjs/passport';
 import { ROLE, Roles } from 'src/roles/roles.decorator';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('Subject')
+@ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Controller('subject')
 export class SubjectController {
   constructor(private readonly subjectService: SubjectService) {}
 
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Post()
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiOperation({ summary: 'Criação de Disciplina' })
   async create(@Body() createSubjectDto: CreateSubjectDto) {
     try {
       const subject = await this.subjectService.create(createSubjectDto);
@@ -35,8 +44,9 @@ export class SubjectController {
     }
   }
 
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Get()
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiOperation({ summary: 'Listagem de Disciplinas' })
   async findAll() {
     try {
       const subjects = await this.subjectService.findAll();
@@ -50,8 +60,10 @@ export class SubjectController {
     }
   }
 
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Get(':id')
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiOperation({ summary: 'Listagem de Disciplina' })
+  @ApiParam({ name: 'id', example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd' })
   async findOne(@Param('id') id: string) {
     try {
       const subject = await this.subjectService.findOne(id);
@@ -65,8 +77,10 @@ export class SubjectController {
     }
   }
 
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Patch(':id')
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiOperation({ summary: 'Atualização de Disciplina' })
+  @ApiParam({ name: 'id', example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd' })
   async update(
     @Param('id') id: string,
     @Body() updateSubjectDto: UpdateSubjectDto,
@@ -83,8 +97,10 @@ export class SubjectController {
     }
   }
 
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Delete(':id')
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiOperation({ summary: 'Remoção de Disciplina' })
+  @ApiParam({ name: 'id', example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd' })
   async remove(@Param('id') id: string) {
     try {
       await this.subjectService.remove(id);
