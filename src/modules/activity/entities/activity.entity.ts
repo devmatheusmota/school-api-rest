@@ -1,4 +1,4 @@
-import { Class } from 'src/modules/class/entities/class.entity';
+import { Course } from 'src/modules/course/entities/course.entity';
 import { Grade } from 'src/modules/grade/entities/grade.entity';
 
 export class Activity {
@@ -6,9 +6,9 @@ export class Activity {
   public name: string;
   public description: string;
   public due_date: Date;
-  public class_id: string;
+  public course_id: string;
   public createdAt?: Date;
   public updatedAt?: Date;
-  public class?: Class;
+  public course?: Course;
   public grades?: Grade[];
 }

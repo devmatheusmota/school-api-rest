@@ -1,5 +1,5 @@
 import { Address } from 'src/modules/address/entities/address.entity';
-import { Class } from 'src/modules/class/entities/class.entity';
+import { Course } from 'src/modules/course/entities/course.entity';
 import { Grade } from 'src/modules/grade/entities/grade.entity';
 
 export class Student {
@@ -9,8 +9,8 @@ export class Student {
   public password: string;
   public createdAt?: Date;
   public updatedAt?: Date;
-  public class_id?: string;
-  public class?: Class;
+  public course_id?: string;
+  public course?: Course;
   public grades?: Grade[];
   public address?: Address;
 }

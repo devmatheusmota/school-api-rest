@@ -17,9 +17,9 @@ model Student {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  class_id  String?
+  course_id String?
   Grade     Grade[] // 1xn relation
-  Class     Class?   @relation(fields: [class_id], references: [id])
+  Course    Course?  @relation(fields: [course_id], references: [id])
   Address   Address? // 1x1 relation
 }
 
@@ -44,7 +44,7 @@ model Teacher {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Subject   Subject[] // 1xn relation
-  Class     Class[] // nxn relation
+  Course    Course[] // nxn relation
 }
 
 model Subject {
@@ -56,7 +56,7 @@ model Subject {
   Teacher    Teacher  @relation(fields: [teacher_id], references: [id]) // 1xn relation
 }
 
-model Class {
+model Course {
   id        String     @id @default(uuid())
   name      String
   year      Int
@@ -72,10 +72,10 @@ model Activity {
   name        String
   description String
   due_date    DateTime
-  class_id    String
+  course_id   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  Class       Class    @relation(fields: [class_id], references: [id]) // 1xn relation
+  Course      Course   @relation(fields: [course_id], references: [id]) // 1xn relation
   Grade       Grade[] // 1xn relation
 }
 

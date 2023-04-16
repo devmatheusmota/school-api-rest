@@ -1,4 +1,4 @@
-import { Class } from 'src/modules/class/entities/class.entity';
+import { Course } from 'src/modules/course/entities/course.entity';
 import { Subject } from 'src/modules/subject/entities/subject.entity';
 
 export class Teacher {
@@ -9,5 +9,5 @@ export class Teacher {
   public created_at?: Date;
   public updated_at?: Date;
   public subjects?: Subject[];
-  public classes?: Class[];
+  public courses?: Course[];
 }

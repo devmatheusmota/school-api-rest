@@ -10,6 +10,6 @@ export class CreateActivityDto {
   @IsNotEmpty({ message: 'due_date is required' })
   due_date: Date;
 
-  @IsNotEmpty({ message: 'class_id is required' })
-  class_id: string;
+  @IsNotEmpty({ message: 'course_id is required' })
+  course_id: string;
 }

@@ -8,14 +8,14 @@ export class ActivityRepository implements IActivityRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: Activity): Promise<Activity> {
-    const classExists = await this.prisma.class.findFirst({
+    const courseExists = await this.prisma.course.findFirst({
       where: {
-        id: data.class_id,
+        id: data.course_id,
       },
     });
 
-    if (!classExists) {
-      throw new NotFoundException('Class not found.');
+    if (!courseExists) {
+      throw new NotFoundException('Course not found.');
     }
 
     const activity = await this.prisma.activity.create({
