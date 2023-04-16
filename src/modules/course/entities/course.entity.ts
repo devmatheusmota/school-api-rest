@@ -8,7 +8,7 @@ export class Course {
   public year: number;
   public createdAt?: Date;
   public updatedAt?: Date;
-  public teachers?: Teacher[];
-  public activities?: Activity[];
-  public students?: Student[];
+  public Teacher?: Teacher[];
+  public Activity?: Activity[];
+  public Student?: Student[];
 }

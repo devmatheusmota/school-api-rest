@@ -14,6 +14,8 @@ import { UpdateCourseDto } from './dto/update-course.dto';
 import { ErrorHandler } from 'src/error/ErrorHandler';
 import { ROLE, Roles } from 'src/roles/roles.decorator';
 import { AuthGuard } from '@nestjs/passport';
+import { AddTeacherToCourseDto } from './dto/add-teacher-to-course.dto';
+import { AddStudentToCourseDto } from './dto/add-student-to-course.dto';
 
 @Controller('course')
 @UseGuards(AuthGuard('jwt'))
@@ -92,6 +94,46 @@ export class CourseController {
       };
     } catch (error) {
       new ErrorHandler(error, this.constructor.name, this.findByTeacherId.name);
+    }
+  }
+
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Post('student')
+  async addStudentToCourse(@Body() addStudentToCourse: AddStudentToCourseDto) {
+    try {
+      const course = await this.courseService.addStudentToCourse(
+        addStudentToCourse.course_id,
+        addStudentToCourse.student_id,
+      );
+
+      return course;
+    } catch (error) {
+      new ErrorHandler(
+        error,
+        this.constructor.name,
+        this.addStudentToCourse.name,
+      );
+    }
+  }
+
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Post('teacher')
+  async addTeacherToCourse(
+    @Body() addTeacherToCourseDto: AddTeacherToCourseDto,
+  ) {
+    try {
+      const course = await this.courseService.addTeacherToCourse(
+        addTeacherToCourseDto.course_id,
+        addTeacherToCourseDto.teacher_id,
+      );
+
+      return course;
+    } catch (error) {
+      new ErrorHandler(
+        error,
+        this.constructor.name,
+        this.addTeacherToCourse.name,
+      );
     }
   }
 

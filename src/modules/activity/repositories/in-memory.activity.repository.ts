@@ -27,7 +27,7 @@ export class InMemoryActivityRepository implements IActivityRepository {
 
   async findByStudentId(studentId: string): Promise<Activity[]> {
     const activity = this.activity.map((activity) => {
-      if (activity.course.students.map((student) => student.id === studentId)) {
+      if (activity.course.Student.map((student) => student.id === studentId)) {
         return activity;
       }
     });
@@ -37,7 +37,7 @@ export class InMemoryActivityRepository implements IActivityRepository {
 
   async findByTeacherId(teacherId: string): Promise<Activity[]> {
     const activities = this.activity.map((activity) => {
-      if (activity.course.teachers.map((teacher) => teacher.id === teacherId)) {
+      if (activity.course.Teacher.map((teacher) => teacher.id === teacherId)) {
         return activity;
       }
     });

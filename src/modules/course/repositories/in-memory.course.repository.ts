@@ -1,6 +1,8 @@
 import { randomUUID } from 'crypto';
 import { ICourseRepository } from './course.repository.interface';
 import { Course } from '../entities/course.entity';
+import { NotFoundException } from '@nestjs/common';
+import { hash } from 'bcrypt';
 
 export class InMemoryCourseRepository implements ICourseRepository {
   private course: Course[] = [];
@@ -47,7 +49,7 @@ export class InMemoryCourseRepository implements ICourseRepository {
 
   async findByStudentId(studentId: string): Promise<Course> {
     const course = this.course.find(
-      (course) => course.students[0].id === studentId,
+      (course) => course.Student[0].id === studentId,
     );
 
     return course;
@@ -55,11 +57,75 @@ export class InMemoryCourseRepository implements ICourseRepository {
 
   async findByTeacherId(teacherId: string): Promise<Course[]> {
     const courses = this.course.map((course) => {
-      if (course.teachers.map((teacher) => teacher.id === teacherId)) {
+      if (course.Teacher.map((teacher) => teacher.id === teacherId)) {
         return course;
       }
     });
 
     return courses;
+  }
+
+  async addStudentToCourse(courseId: string, studentId: string): Promise<void> {
+    const course = this.course.find((course) => course.id === courseId);
+
+    if (!course) {
+      throw new NotFoundException('Course not found');
+    }
+
+    course.Student.push({
+      id: studentId,
+      name: 'Student',
+      email: 'student@email.com',
+      password: await hash('123456', 10),
+    });
+  }
+
+  async removeStudentFromCourse(
+    courseId: string,
+    studentId: string,
+  ): Promise<void> {
+    const course = this.course.find((course) => course.id === courseId);
+
+    if (!course) {
+      throw new NotFoundException('Course not found');
+    }
+
+    const studentIndex = course.Student.findIndex(
+      (student) => student.id === studentId,
+    );
+
+    course.Student.splice(studentIndex, 1);
+  }
+
+  async addTeacherToCourse(courseId: string, teacherId: string): Promise<void> {
+    const course = this.course.find((course) => course.id === courseId);
+
+    if (!course) {
+      throw new NotFoundException('Course not found');
+    }
+
+    course.Teacher.push({
+      id: teacherId,
+      name: 'Teacher',
+      email: 'teacher@mail.com',
+      password: await hash('123456', 10),
+    });
+  }
+
+  async removeTeacherFromCourse(
+    courseId: string,
+    teacherId: string,
+  ): Promise<void> {
+    const course = this.course.find((course) => course.id === courseId);
+
+    if (!course) {
+      throw new NotFoundException('Course not found');
+    }
+
+    const teacherIndex = course.Teacher.findIndex(
+      (teacher) => teacher.id === teacherId,
+    );
+
+    course.Teacher.splice(teacherIndex, 1);
   }
 }

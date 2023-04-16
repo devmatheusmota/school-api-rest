@@ -9,4 +9,8 @@ export interface ICourseRepository {
   findByStudentId(studentId: string): Promise<Course>;
   findByTeacherId(teacherId: string): Promise<Course[]>;
   checkIfCourseExists(name: string, year: number): Promise<boolean>;
+  addStudentToCourse(courseId: string, studentId: string): Promise<void>;
+  removeStudentFromCourse(courseId: string, studentId: string): Promise<void>;
+  addTeacherToCourse(courseId: string, teacherId: string): Promise<void>;
+  removeTeacherFromCourse(courseId: string, teacherId: string): Promise<void>;
 }

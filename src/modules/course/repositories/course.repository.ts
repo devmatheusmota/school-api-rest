@@ -9,7 +9,10 @@ export class CourseRepository implements ICourseRepository {
 
   async create(data: Course): Promise<Course> {
     const course = await this.prisma.course.create({
-      data,
+      data: {
+        name: data.name,
+        year: data.year,
+      },
     });
 
     return course;
@@ -19,6 +22,10 @@ export class CourseRepository implements ICourseRepository {
     const course = await this.prisma.course.findUnique({
       where: {
         id,
+      },
+      include: {
+        Student: true,
+        Teacher: true,
       },
     });
 
@@ -79,12 +86,161 @@ export class CourseRepository implements ICourseRepository {
     return course;
   }
 
+  async addStudentToCourse(courseId: string, studentId: string): Promise<void> {
+    const course = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
+
+    if (!course) {
+      throw new NotFoundException('Course not found.');
+    }
+
+    const student = await this.prisma.student.findUnique({
+      where: {
+        id: studentId,
+      },
+    });
+
+    if (!student) {
+      throw new NotFoundException('Student not found.');
+    }
+
+    await this.prisma.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        Student: {
+          connect: {
+            id: studentId,
+          },
+        },
+      },
+    });
+  }
+
+  async removeStudentFromCourse(
+    courseId: string,
+    studentId: string,
+  ): Promise<void> {
+    const course = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
+
+    if (!course) {
+      throw new NotFoundException('Course not found.');
+    }
+
+    const student = await this.prisma.student.findUnique({
+      where: {
+        id: studentId,
+      },
+    });
+
+    if (!student) {
+      throw new NotFoundException('Student not found.');
+    }
+
+    await this.prisma.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        Student: {
+          disconnect: {
+            id: studentId,
+          },
+        },
+      },
+    });
+  }
+
+  async addTeacherToCourse(courseId: string, teacherId: string): Promise<void> {
+    const course = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
+
+    if (!course) {
+      throw new NotFoundException('Course not found.');
+    }
+
+    const teacher = await this.prisma.teacher.findUnique({
+      where: {
+        id: teacherId,
+      },
+    });
+
+    if (!teacher) {
+      throw new NotFoundException('Teacher not found.');
+    }
+
+    await this.prisma.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        Teacher: {
+          connect: {
+            id: teacherId,
+          },
+        },
+      },
+    });
+  }
+
+  async removeTeacherFromCourse(
+    courseId: string,
+    teacherId: string,
+  ): Promise<void> {
+    const course = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
+
+    if (!course) {
+      throw new NotFoundException('Course not found.');
+    }
+
+    const teacher = await this.prisma.teacher.findUnique({
+      where: {
+        id: teacherId,
+      },
+    });
+
+    if (!teacher) {
+      throw new NotFoundException('Teacher not found.');
+    }
+
+    await this.prisma.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        Teacher: {
+          disconnect: {
+            id: teacherId,
+          },
+        },
+      },
+    });
+  }
+
   async update(id: string, data: Course): Promise<Course> {
     const course = await this.prisma.course.update({
       where: {
         id,
       },
-      data,
+      data: {
+        name: data.name,
+        year: data.year,
+      },
     });
 
     return course;

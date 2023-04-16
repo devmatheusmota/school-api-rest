@@ -70,6 +70,50 @@ export class CourseService {
     return courses;
   }
 
+  async addStudentToCourse(courseId: string, studentId: string) {
+    const courseExists = await this.courseRepository.findById(courseId);
+
+    if (!courseExists) {
+      throw new NotFoundException('Course not found.');
+    }
+
+    if (courseExists.Student.map((student) => student.id).includes(studentId)) {
+      await this.courseRepository.removeStudentFromCourse(courseId, studentId);
+
+      return {
+        message: 'Student removed from course.',
+      };
+    }
+
+    await this.courseRepository.addStudentToCourse(courseId, studentId);
+
+    return {
+      message: 'Student added to course.',
+    };
+  }
+
+  async addTeacherToCourse(courseId: string, teacherId: string) {
+    const courseExists = await this.courseRepository.findById(courseId);
+
+    if (!courseExists) {
+      throw new NotFoundException('Course not found.');
+    }
+
+    if (courseExists.Teacher.map((student) => student.id).includes(teacherId)) {
+      await this.courseRepository.removeTeacherFromCourse(courseId, teacherId);
+
+      return {
+        message: 'Teacher removed from course.',
+      };
+    }
+
+    await this.courseRepository.addTeacherToCourse(courseId, teacherId);
+
+    return {
+      message: 'Teacher added to course.',
+    };
+  }
+
   async update(id: string, updateCourseDto: UpdateCourseDto) {
     const courseExists = await this.courseRepository.findById(id);
 
