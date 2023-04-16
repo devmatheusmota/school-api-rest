@@ -46,6 +46,8 @@ export class InMemoryTeacherRepository implements ITeacherRepository {
   }
 
   async checkIfEmailExists(_email: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    const teacher = this.teacher.find((teacher) => teacher.email === _email);
+
+    return !!teacher;
   }
 }
