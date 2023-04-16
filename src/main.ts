@@ -16,6 +16,7 @@ async function bootstrap() {
     .addServer('http://localhost:3000/v1', 'Development')
     .setVersion('1.0.0')
     .addTag('default', 'Endpoints padrão')
+    .addTag('Auth', 'Endpoints para autenticação')
     .addTag('Student', 'Endpoints para gerenciar estudantes')
     .addTag('Student Card', 'Endpoints para gerenciar carteira de estudantes')
     .addTag('Teacher', 'Endpoints para gerenciar professores')
@@ -23,7 +24,6 @@ async function bootstrap() {
     .addTag('Activity', 'Endpoints para gerenciar atividades')
     .addTag('Subject', 'Endpoints para gerenciar matérias')
     .addTag('Grade', 'Endpoints para gerenciar notas')
-    .addTag('Auth', 'Endpoints para autenticação')
     .build();
   const document = SwaggerModule.createDocument(app, config, {
     operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
