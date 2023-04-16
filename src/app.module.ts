@@ -13,7 +13,6 @@ import { StudentCardModule } from './modules/student-card/student-card.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './roles/roles.guard';
-import { AuthGuard } from '@nestjs/passport';
 
 @Module({
   imports: [
