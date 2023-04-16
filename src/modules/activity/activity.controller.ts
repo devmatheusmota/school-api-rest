@@ -1,34 +1,90 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
+import { ErrorHandler } from 'src/error/ErrorHandler';
 
 @Controller('activity')
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 
   @Post()
-  create(@Body() createActivityDto: CreateActivityDto) {
-    return this.activityService.create(createActivityDto);
+  async create(@Body() createActivityDto: CreateActivityDto) {
+    try {
+      const activity = await this.activityService.create(createActivityDto);
+
+      return {
+        message: 'Activity created successfully.',
+        activity,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'create');
+    }
   }
 
   @Get()
-  findAll() {
-    return this.activityService.findAll();
+  async findAll() {
+    try {
+      const activities = await this.activityService.findAll();
+
+      return {
+        message: 'Activities',
+        activities,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'findAll');
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.activityService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    try {
+      const activity = await this.activityService.findOne(id);
+
+      return {
+        message: 'Activity',
+        activity,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'findOne');
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto) {
-    return this.activityService.update(+id, updateActivityDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateActivityDto: UpdateActivityDto,
+  ) {
+    try {
+      const activity = await this.activityService.update(id, updateActivityDto);
+
+      return {
+        message: 'Activity updated successfully.',
+        activity,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'update');
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.activityService.remove(+id);
+  async remove(@Param('id') id: string) {
+    try {
+      await this.activityService.remove(id);
+
+      return {
+        message: 'Activity deleted successfully.',
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'remove');
+    }
   }
 }

@@ -1,26 +1,63 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
+import { IActivityRepository } from './repositories/activity.repository.interface';
 
 @Injectable()
 export class ActivityService {
-  create(createActivityDto: CreateActivityDto) {
-    return 'This action adds a new activity';
+  constructor(
+    @Inject('ActivityRepository')
+    private activityRepository: IActivityRepository,
+  ) {}
+
+  async create(createActivityDto: CreateActivityDto) {
+    createActivityDto.due_date = new Date(createActivityDto.due_date);
+
+    const activity = await this.activityRepository.create(createActivityDto);
+
+    return activity;
   }
 
-  findAll() {
-    return `This action returns all activity`;
+  async findAll() {
+    const activities = await this.activityRepository.findAll();
+
+    if (activities.length === 0) {
+      throw new NotFoundException('No activities found.');
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} activity`;
+  async findOne(id: string) {
+    const activity = await this.activityRepository.findById(id);
+
+    if (!activity) {
+      throw new NotFoundException('Activity not found.');
+    }
+
+    return activity;
   }
 
-  update(id: number, updateActivityDto: UpdateActivityDto) {
-    return `This action updates a #${id} activity`;
+  async update(id: string, updateActivityDto: UpdateActivityDto) {
+    const activityExists = await this.activityRepository.findById(id);
+
+    if (!activityExists) {
+      throw new NotFoundException('Activity not found.');
+    }
+
+    const activity = await this.activityRepository.update(
+      id,
+      updateActivityDto,
+    );
+
+    return activity;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} activity`;
+  async remove(id: string) {
+    const activityExists = await this.activityRepository.findById(id);
+
+    if (!activityExists) {
+      throw new NotFoundException('Activity not found.');
+    }
+
+    await this.activityRepository.delete(id);
   }
 }
