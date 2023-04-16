@@ -18,10 +18,8 @@ import { AddTeacherToCourseDto } from './dto/add-teacher-to-course.dto';
 import { AddStudentToCourseDto } from './dto/add-student-to-course.dto';
 import {
   ApiBearerAuth,
-  ApiExtension,
   ApiOperation,
   ApiParam,
-  ApiProperty,
   ApiTags,
 } from '@nestjs/swagger';
 
