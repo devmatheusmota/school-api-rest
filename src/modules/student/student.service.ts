@@ -54,6 +54,16 @@ export class StudentService {
     return { ...student, password: undefined };
   }
 
+  async findByEmail(email: string) {
+    const student = await this.studentRepository.findByEmail(email);
+
+    if (!student) {
+      throw new NotFoundException('Student not found!');
+    }
+
+    return student;
+  }
+
   async update(id: string, updateStudentDto: UpdateStudentDto) {
     const studentExists = await this.studentRepository.findById(id);
 

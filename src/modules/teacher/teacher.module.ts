@@ -14,5 +14,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
       useClass: TeacherRepository,
     },
   ],
+  exports: [TeacherService, TeacherModule],
 })
 export class TeacherModule {}

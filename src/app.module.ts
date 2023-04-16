@@ -10,6 +10,7 @@ import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma/prisma.service';
 import { StudentCardModule } from './modules/student-card/student-card.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { StudentCardModule } from './modules/student-card/student-card.module';
     ActivityModule,
     GradeModule,
     StudentCardModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [PrismaService],
