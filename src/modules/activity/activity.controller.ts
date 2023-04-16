@@ -63,7 +63,11 @@ export class ActivityController {
   @Get(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID' })
-  @ApiParam({ name: 'id', example: '1', description: 'ID da Atividade' })
+  @ApiParam({
+    name: 'id',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+    description: 'ID da Atividade',
+  })
   async findOne(@Param('id') id: string) {
     try {
       const activity = await this.activityService.findOne(id);
@@ -80,7 +84,11 @@ export class ActivityController {
   @Get('course/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Curso' })
-  @ApiParam({ name: 'id', example: '1', description: 'ID do Curso' })
+  @ApiParam({
+    name: 'id',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+    description: 'ID do Curso',
+  })
   async findByCourseId(@Param('id') id: string) {
     try {
       const activities = await this.activityService.findByCourseId(id);
@@ -97,7 +105,11 @@ export class ActivityController {
   @Get('student/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Estudante' })
-  @ApiParam({ name: 'id', example: '1', description: 'ID do Estudante' })
+  @ApiParam({
+    name: 'id',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+    description: 'ID do Estudante',
+  })
   async findByStudentId(@Param('id') id: string) {
     try {
       const activities = await this.activityService.findByStudentId(id);
@@ -114,7 +126,11 @@ export class ActivityController {
   @Get('teacher/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Professor' })
-  @ApiParam({ name: 'id', example: '1', description: 'ID do Professor' })
+  @ApiParam({
+    name: 'id',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+    description: 'ID do Professor',
+  })
   async findByTeacherId(@Param('id') id: string) {
     try {
       const activities = await this.activityService.findByTeacherId(id);
@@ -131,7 +147,11 @@ export class ActivityController {
   @Patch(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Atualização de Atividades' })
-  @ApiParam({ name: 'id', example: '1', description: 'ID da Atividade' })
+  @ApiParam({
+    name: 'id',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+    description: 'ID da Atividade',
+  })
   async update(
     @Param('id') id: string,
     @Body() updateActivityDto: UpdateActivityDto,
@@ -151,7 +171,11 @@ export class ActivityController {
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Delete(':id')
   @ApiOperation({ summary: 'Remoção de Atividades' })
-  @ApiParam({ name: 'id', example: '1', description: 'ID da Atividade' })
+  @ApiParam({
+    name: 'id',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+    description: 'ID da Atividade',
+  })
   async remove(@Param('id') id: string) {
     try {
       await this.activityService.remove(id);

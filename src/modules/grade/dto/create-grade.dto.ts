@@ -6,11 +6,17 @@ export class CreateGradeDto {
   @IsNotEmpty({ message: 'value is required' })
   value: number;
 
-  @ApiProperty({ example: '1', description: 'ID do Aluno' })
+  @ApiProperty({
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+    description: 'ID do Aluno',
+  })
   @IsNotEmpty({ message: 'student_id is required' })
   student_id: string;
 
-  @ApiProperty({ example: '1', description: 'ID da Atividade' })
+  @ApiProperty({
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+    description: 'ID da Atividade',
+  })
   @IsNotEmpty({ message: 'activity_id is required' })
   activity_id: string;
 }

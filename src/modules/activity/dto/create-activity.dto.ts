@@ -17,7 +17,10 @@ export class CreateActivityDto {
   @IsNotEmpty({ message: 'due_date is required' })
   due_date: Date;
 
-  @ApiProperty({ example: '1', description: 'ID do Curso' })
+  @ApiProperty({
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+    description: 'ID do Curso',
+  })
   @IsNotEmpty({ message: 'course_id is required' })
   course_id: string;
 }

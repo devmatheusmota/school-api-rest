@@ -17,7 +17,7 @@ async function bootstrap() {
     .setVersion('1.0.0')
     .addTag('default', 'Endpoints padrão')
     .addTag('Student', 'Endpoints para gerenciar estudantes')
-    .addTag('Student-card', 'Endpoints para gerenciar carteira de estudantes')
+    .addTag('Student Card', 'Endpoints para gerenciar carteira de estudantes')
     .addTag('Teacher', 'Endpoints para gerenciar professores')
     .addTag('Course', 'Endpoints para gerenciar cursos')
     .addTag('Activity', 'Endpoints para gerenciar atividades')
