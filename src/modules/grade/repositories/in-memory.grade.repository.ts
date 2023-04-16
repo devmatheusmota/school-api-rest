@@ -51,10 +51,17 @@ export class InMemoryGradeRepository implements IGradeRepository {
 
   async update(id: string, grade: Grade): Promise<Grade> {
     const gradeIndex = this.grades.findIndex((grade) => grade.id === id);
-    grade.id = this.grades[gradeIndex].id;
-    this.grades[gradeIndex] = grade;
 
-    return grade;
+    const oldObject = this.grades[gradeIndex];
+
+    const newObject = {
+      ...oldObject,
+      ...grade,
+    };
+
+    this.grades[gradeIndex] = newObject;
+
+    return this.grades[gradeIndex];
   }
 
   async delete(id: string): Promise<void> {
@@ -64,9 +71,18 @@ export class InMemoryGradeRepository implements IGradeRepository {
   }
 
   async checkIfExists(
-    _student_id: string,
-    _activity_id: string,
+    student_id: string,
+    activity_id: string,
   ): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    const grade = this.grades.find(
+      (grade) =>
+        grade.student_id === student_id && grade.activity_id === activity_id,
+    );
+
+    if (grade) {
+      return true;
+    }
+
+    return false;
   }
 }
