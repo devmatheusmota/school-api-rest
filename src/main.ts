@@ -12,7 +12,7 @@ async function bootstrap() {
     .setDescription('API para o desafio EMR')
     .setContact('', '', 'devmatheusmota@gmail.com')
     .addBearerAuth()
-    // .addServer('', 'Production') // TODO: add production server
+    .addServer('https://apidesafio.devmatheusmota.com.br/v1', 'Production')
     .addServer('http://localhost:3000/v1', 'Development')
     .setVersion('1.0.0')
     .addTag('default', 'Endpoints padrão')
