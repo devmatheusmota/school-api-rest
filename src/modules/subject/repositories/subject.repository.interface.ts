@@ -7,4 +7,5 @@ export interface ISubjectRepository {
   findById(id: string): Promise<Subject | undefined>;
   findAll(): Promise<Subject[]>;
   findByName(name: string): Promise<Subject | undefined>;
+  findByTeacherId(teacherId: string): Promise<Subject[]>;
 }

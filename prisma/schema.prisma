@@ -52,12 +52,13 @@ model Teacher {
 }
 
 model Subject {
-  id         String   @id @default(uuid())
+  id         String     @id @default(uuid())
   name       String
   teacher_id String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  Teacher    Teacher  @relation(fields: [teacher_id], references: [id]) // 1xn relation
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  Teacher    Teacher    @relation(fields: [teacher_id], references: [id]) // 1xn relation
+  Activity   Activity[]
 }
 
 model Course {
@@ -77,10 +78,12 @@ model Activity {
   description String
   due_date    DateTime
   course_id   String
+  subject_id  String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   Course      Course   @relation(fields: [course_id], references: [id]) // 1xn relation
   Grade       Grade[] // 1xn relation
+  Subject     Subject  @relation(fields: [subject_id], references: [id]) // 1xn relation
 }
 
 model Grade {

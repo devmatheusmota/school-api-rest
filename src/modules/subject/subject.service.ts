@@ -44,6 +44,16 @@ export class SubjectService {
     return subject;
   }
 
+  async findByTeacherId(teacherId: string) {
+    const subjects = await this.subjectRepository.findByTeacherId(teacherId);
+
+    if (subjects.length === 0) {
+      throw new NotFoundException('No subjects found');
+    }
+
+    return subjects;
+  }
+
   async update(id: string, updateSubjectDto: UpdateSubjectDto) {
     const subjectExists = await this.subjectRepository.findById(id);
 

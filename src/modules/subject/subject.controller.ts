@@ -77,6 +77,23 @@ export class SubjectController {
     }
   }
 
+  @Get('/teacher/:id')
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiOperation({ summary: 'Listagem de Disciplina pelo ID do Professor' })
+  @ApiParam({ name: 'id', example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd' })
+  async findByTeacherId(@Param('id') id: string) {
+    try {
+      const subjects = await this.subjectService.findByTeacherId(id);
+
+      return {
+        message: 'Subject',
+        subject: subjects,
+      };
+    } catch (error) {
+      new ErrorHandler(error, 'SubjectController', 'findByTeacherId');
+    }
+  }
+
   @Patch(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Atualização de Disciplina' })

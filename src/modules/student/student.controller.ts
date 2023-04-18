@@ -31,7 +31,7 @@ export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
   @Post()
-  @Roles(ROLE.ADMIN)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Criação de Alunos' })
   async create(@Body() createStudentDto: CreateStudentDto) {
     try {
@@ -50,7 +50,7 @@ export class StudentController {
   }
 
   @Get()
-  @Roles(ROLE.ADMIN)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Listagem de Alunos' })
   async findAll() {
     try {
@@ -71,7 +71,7 @@ export class StudentController {
   }
 
   @Get(':id')
-  @Roles(ROLE.ADMIN)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Listagem de Alunos pelo ID' })
   @ApiParam({
     name: 'id',
@@ -95,7 +95,7 @@ export class StudentController {
   }
 
   @Get('/course/:id')
-  @Roles(ROLE.ADMIN)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Listagem de Alunos pelo ID do Curso' })
   @ApiParam({
     name: 'id',
@@ -121,7 +121,7 @@ export class StudentController {
   }
 
   @Patch(':id')
-  @Roles(ROLE.ADMIN)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Atualização de Alunos' })
   @ApiParam({
     name: 'id',
@@ -148,7 +148,7 @@ export class StudentController {
   }
 
   @Delete(':id')
-  @Roles(ROLE.ADMIN)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Remoção de Alunos' })
   @ApiParam({
     name: 'id',

@@ -40,6 +40,10 @@ export class GradeRepository implements IGradeRepository {
       where: {
         id,
       },
+      include: {
+        Activity: true,
+        Student: true,
+      },
     });
 
     return grade;
@@ -55,6 +59,14 @@ export class GradeRepository implements IGradeRepository {
     const grades = await this.prisma.grade.findMany({
       where: {
         student_id,
+      },
+      include: {
+        Activity: {
+          include: {
+            Subject: true,
+          },
+        },
+        Student: true,
       },
     });
 
