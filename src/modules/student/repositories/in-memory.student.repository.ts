@@ -31,6 +31,14 @@ export class InMemoryStudentRepository implements IStudentRepository {
     return students;
   }
 
+  async findByCourse(id: string): Promise<Student[]> {
+    const students = this.students.filter(
+      (student) => student.course_id === id,
+    );
+
+    return students;
+  }
+
   async update(id: string, student: Student): Promise<Student> {
     const studentIndex = this.students.findIndex(
       (student) => student.id === id,

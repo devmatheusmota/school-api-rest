@@ -54,6 +54,18 @@ export class StudentService {
     return { ...student, password: undefined };
   }
 
+  async findByCourse(id: string) {
+    const students = await this.studentRepository.findByCourse(id);
+
+    if (students.length === 0) {
+      throw new NotFoundException('No students found!');
+    }
+
+    return students.map((student) => {
+      return { ...student, password: undefined };
+    });
+  }
+
   async findByEmail(email: string) {
     const student = await this.studentRepository.findByEmail(email);
 

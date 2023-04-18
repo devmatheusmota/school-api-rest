@@ -94,6 +94,32 @@ export class StudentController {
     }
   }
 
+  @Get('/course/:id')
+  @Roles(ROLE.ADMIN)
+  @ApiOperation({ summary: 'Listagem de Alunos pelo ID do Curso' })
+  @ApiParam({
+    name: 'id',
+    description: 'ID do Curso',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+  })
+  async findByCourse(@Param('id') id: string) {
+    try {
+      const students = await this.studentService.findByCourse(id);
+
+      return {
+        message: 'Students',
+        students: students.map((student) => {
+          return {
+            ...student,
+            password: undefined,
+          };
+        }),
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'findByCourse');
+    }
+  }
+
   @Patch(':id')
   @Roles(ROLE.ADMIN)
   @ApiOperation({ summary: 'Atualização de Alunos' })

@@ -35,6 +35,16 @@ export class StudentRepository implements IStudentRepository {
     return student;
   }
 
+  async findByCourse(id: string): Promise<Student[]> {
+    const students = await this.prisma.student.findMany({
+      where: {
+        course_id: id,
+      },
+    });
+
+    return students;
+  }
+
   async checkIfEmailExists(email: string): Promise<boolean> {
     const student = await this.prisma.student.findFirst({
       where: {
