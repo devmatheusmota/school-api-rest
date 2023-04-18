@@ -26,7 +26,11 @@ export class SubjectRepository implements ISubjectRepository {
   }
 
   async findAll(): Promise<Subject[]> {
-    const students = await this.prisma.subject.findMany();
+    const students = await this.prisma.subject.findMany({
+      include: {
+        Teacher: true,
+      },
+    });
 
     return students;
   }

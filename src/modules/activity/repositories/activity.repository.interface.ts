@@ -9,4 +9,5 @@ export interface IActivityRepository {
   findByStudentId(studentId: string): Promise<Activity[]>;
   findByTeacherId(teacherId: string): Promise<Activity[]>;
   findByCourseId(courseId: string): Promise<Activity[]>;
+  findBySubjectId(subjectId: string): Promise<Activity[]>;
 }

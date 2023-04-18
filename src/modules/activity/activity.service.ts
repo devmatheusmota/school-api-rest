@@ -68,6 +68,16 @@ export class ActivityService {
     return activities;
   }
 
+  async findBySubjectId(subjectId: string) {
+    const activities = await this.activityRepository.findBySubjectId(subjectId);
+
+    if (activities.length === 0) {
+      throw new NotFoundException('Activities not found.');
+    }
+
+    return activities;
+  }
+
   async update(id: string, updateActivityDto: UpdateActivityDto) {
     const activityExists = await this.activityRepository.findById(id);
 

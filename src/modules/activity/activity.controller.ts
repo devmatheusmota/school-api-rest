@@ -144,6 +144,27 @@ export class ActivityController {
     }
   }
 
+  @Get('subject/:id')
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @ApiOperation({ summary: 'Listagem de Atividades pelo ID da Disciplina' })
+  @ApiParam({
+    name: 'id',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+    description: 'ID da Disciplina',
+  })
+  async findBySubjectId(@Param('id') id: string) {
+    try {
+      const activities = await this.activityService.findBySubjectId(id);
+
+      return {
+        message: 'Activities',
+        activities,
+      };
+    } catch (error) {
+      new ErrorHandler(error, this.constructor.name, 'findBySubjectId');
+    }
+  }
+
   @Patch(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Atualização de Atividades' })

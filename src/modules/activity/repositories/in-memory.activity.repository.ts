@@ -71,6 +71,16 @@ export class InMemoryActivityRepository implements IActivityRepository {
     return activities;
   }
 
+  async findBySubjectId(subjectId: string): Promise<Activity[]> {
+    const activities = this.activity.map((activity) => {
+      if (activity.subject_id === subjectId) {
+        return activity;
+      }
+    });
+
+    return activities;
+  }
+
   async update(id: string, activity: Activity): Promise<Activity> {
     const activityIndex = this.activity.findIndex(
       (activity) => activity.id === id,

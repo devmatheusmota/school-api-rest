@@ -112,6 +112,26 @@ export class ActivityRepository implements IActivityRepository {
     return activities;
   }
 
+  async findBySubjectId(subject_id: string): Promise<Activity[]> {
+    const subject = await this.prisma.subject.findUnique({
+      where: {
+        id: subject_id,
+      },
+    });
+
+    if (!subject) {
+      throw new NotFoundException('Subject not found.');
+    }
+
+    const activities = await this.prisma.activity.findMany({
+      where: {
+        subject_id,
+      },
+    });
+
+    return activities;
+  }
+
   async update(id: string, data: Activity): Promise<Activity> {
     const activity = await this.prisma.activity.update({
       where: {

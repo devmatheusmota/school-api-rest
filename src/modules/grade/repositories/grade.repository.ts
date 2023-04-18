@@ -50,7 +50,16 @@ export class GradeRepository implements IGradeRepository {
   }
 
   async findAll(): Promise<Grade[]> {
-    const students = await this.prisma.grade.findMany();
+    const students = await this.prisma.grade.findMany({
+      include: {
+        Activity: {
+          include: {
+            Subject: true,
+          },
+        },
+        Student: true,
+      },
+    });
 
     return students;
   }
@@ -77,6 +86,14 @@ export class GradeRepository implements IGradeRepository {
     const grades = await this.prisma.grade.findMany({
       where: {
         activity_id,
+      },
+      include: {
+        Activity: {
+          include: {
+            Subject: true,
+          },
+        },
+        Student: true,
       },
     });
 
