@@ -47,17 +47,17 @@ export class InMemoryCourseRepository implements ICourseRepository {
     return !!course;
   }
 
-  async findByStudentId(studentId: string): Promise<Course> {
+  async findByStudentId(student_id: string): Promise<Course> {
     const course = this.course.find(
-      (course) => course.Student[0].id === studentId,
+      (course) => course.Student[0].id === student_id,
     );
 
     return course;
   }
 
-  async findByTeacherId(teacherId: string): Promise<Course[]> {
+  async findByTeacherId(teacher_id: string): Promise<Course[]> {
     const courses = this.course.map((course) => {
-      if (course.Teacher.map((teacher) => teacher.id === teacherId)) {
+      if (course.Teacher.map((teacher) => teacher.id === teacher_id)) {
         return course;
       }
     });
@@ -65,15 +65,18 @@ export class InMemoryCourseRepository implements ICourseRepository {
     return courses;
   }
 
-  async addStudentToCourse(courseId: string, studentId: string): Promise<void> {
-    const course = this.course.find((course) => course.id === courseId);
+  async addStudentToCourse(
+    course_id: string,
+    student_id: string,
+  ): Promise<void> {
+    const course = this.course.find((course) => course.id === course_id);
 
     if (!course) {
       throw new NotFoundException('Course not found');
     }
 
     course.Student.push({
-      id: studentId,
+      id: student_id,
       name: 'Student',
       email: 'student@email.com',
       password: await hash('123456', 10),
@@ -81,31 +84,34 @@ export class InMemoryCourseRepository implements ICourseRepository {
   }
 
   async removeStudentFromCourse(
-    courseId: string,
-    studentId: string,
+    course_id: string,
+    student_id: string,
   ): Promise<void> {
-    const course = this.course.find((course) => course.id === courseId);
+    const course = this.course.find((course) => course.id === course_id);
 
     if (!course) {
       throw new NotFoundException('Course not found');
     }
 
     const studentIndex = course.Student.findIndex(
-      (student) => student.id === studentId,
+      (student) => student.id === student_id,
     );
 
     course.Student.splice(studentIndex, 1);
   }
 
-  async addTeacherToCourse(courseId: string, teacherId: string): Promise<void> {
-    const course = this.course.find((course) => course.id === courseId);
+  async addTeacherToCourse(
+    course_id: string,
+    teacher_id: string,
+  ): Promise<void> {
+    const course = this.course.find((course) => course.id === course_id);
 
     if (!course) {
       throw new NotFoundException('Course not found');
     }
 
     course.Teacher.push({
-      id: teacherId,
+      id: teacher_id,
       name: 'Teacher',
       email: 'teacher@mail.com',
       password: await hash('123456', 10),
@@ -113,17 +119,17 @@ export class InMemoryCourseRepository implements ICourseRepository {
   }
 
   async removeTeacherFromCourse(
-    courseId: string,
-    teacherId: string,
+    course_id: string,
+    teacher_id: string,
   ): Promise<void> {
-    const course = this.course.find((course) => course.id === courseId);
+    const course = this.course.find((course) => course.id === course_id);
 
     if (!course) {
       throw new NotFoundException('Course not found');
     }
 
     const teacherIndex = course.Teacher.findIndex(
-      (teacher) => teacher.id === teacherId,
+      (teacher) => teacher.id === teacher_id,
     );
 
     course.Teacher.splice(teacherIndex, 1);

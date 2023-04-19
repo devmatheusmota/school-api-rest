@@ -38,8 +38,8 @@ export class ActivityService {
     return activity;
   }
 
-  async findByCourseId(courseId: string) {
-    const activities = await this.activityRepository.findByCourseId(courseId);
+  async findByCourseId(course_id: string) {
+    const activities = await this.activityRepository.findByCourseId(course_id);
 
     if (activities.length === 0) {
       throw new NotFoundException('Activities not found.');
@@ -48,8 +48,10 @@ export class ActivityService {
     return activities;
   }
 
-  async findByStudentId(studentId: string) {
-    const activities = await this.activityRepository.findByStudentId(studentId);
+  async findByStudentId(student_id: string) {
+    const activities = await this.activityRepository.findByStudentId(
+      student_id,
+    );
 
     if (activities.length === 0) {
       throw new NotFoundException('Activities not found.');
@@ -58,8 +60,10 @@ export class ActivityService {
     return activities;
   }
 
-  async findByTeacherId(teacherId: string) {
-    const activities = await this.activityRepository.findByTeacherId(teacherId);
+  async findByTeacherId(teacher_id: string) {
+    const activities = await this.activityRepository.findByTeacherId(
+      teacher_id,
+    );
 
     if (activities.length === 0) {
       throw new NotFoundException('Activities not found.');
@@ -68,8 +72,10 @@ export class ActivityService {
     return activities;
   }
 
-  async findBySubjectId(subjectId: string) {
-    const activities = await this.activityRepository.findBySubjectId(subjectId);
+  async findBySubjectId(subject_id: string) {
+    const activities = await this.activityRepository.findBySubjectId(
+      subject_id,
+    );
 
     if (activities.length === 0) {
       throw new NotFoundException('Activities not found.');

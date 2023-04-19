@@ -9,28 +9,28 @@ async function bootstrap() {
   app.enableCors();
 
   const config = new DocumentBuilder()
-    .setTitle('Desafio EMR')
-    .setDescription('API para o desafio EMR')
+    .setTitle('EMR Challenge - API Rest')
+    .setDescription('API Rest for EMR Challenge')
     .setContact('', '', 'devmatheusmota@gmail.com')
     .addBearerAuth()
     .addServer('https://apidesafio.devmatheusmota.com.br/v1', 'Production')
     .addServer('http://localhost:3000/v1', 'Development')
     .setVersion('1.0.0')
-    .addTag('default', 'Endpoints padrão')
-    .addTag('Auth', 'Endpoints para autenticação')
-    .addTag('Student', 'Endpoints para gerenciar estudantes')
-    .addTag('Student Card', 'Endpoints para gerenciar carteira de estudantes')
-    .addTag('Teacher', 'Endpoints para gerenciar professores')
-    .addTag('Course', 'Endpoints para gerenciar cursos')
-    .addTag('Activity', 'Endpoints para gerenciar atividades')
-    .addTag('Subject', 'Endpoints para gerenciar matérias')
-    .addTag('Grade', 'Endpoints para gerenciar notas')
+    .addTag('default', 'Default Endpoints')
+    .addTag('Auth', 'Authentication Endpoints')
+    .addTag('Student', 'Students Management Endpoints')
+    .addTag('Student Card', 'Student Cards Management Endpoints')
+    .addTag('Teacher', 'Teachers Management Endpoints')
+    .addTag('Course', 'Courses Management Endpoints')
+    .addTag('Activity', 'Activities Management Endpoints')
+    .addTag('Subject', 'Subjects Management Endpoints')
+    .addTag('Grade', 'Grades Management Endpoints')
     .build();
   const document = SwaggerModule.createDocument(app, config, {
     operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
   });
   SwaggerModule.setup('docs', app, document, {
-    customSiteTitle: 'Desafio EMR - API',
+    customSiteTitle: 'EMR Challenge - API Rest',
   });
 
   app.setGlobalPrefix('v1');

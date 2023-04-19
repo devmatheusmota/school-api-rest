@@ -29,8 +29,8 @@ export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 
   @Post()
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Criação de Atividades' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Create Activity' })
   async create(@Body() createActivityDto: CreateActivityDto) {
     try {
       const activity = await this.activityService.create(createActivityDto);
@@ -40,13 +40,13 @@ export class ActivityController {
         activity,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'create');
+      new ErrorHandler(error, this.constructor.name, this.create.name);
     }
   }
 
   @Get()
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Atividades' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Activities' })
   async findAll() {
     try {
       const activities = await this.activityService.findAll();
@@ -56,13 +56,13 @@ export class ActivityController {
         activities,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findAll');
+      new ErrorHandler(error, this.constructor.name, this.findAll.name);
     }
   }
 
   @Get(':id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Atividades pelo ID' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Activities by ID' })
   @ApiParam({
     name: 'id',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
@@ -77,13 +77,13 @@ export class ActivityController {
         activity,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findOne');
+      new ErrorHandler(error, this.constructor.name, this.findOne.name);
     }
   }
 
   @Get('course/:id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Curso' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Activities by Course ID' })
   @ApiParam({
     name: 'id',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
@@ -98,17 +98,17 @@ export class ActivityController {
         activities,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findByCourseId');
+      new ErrorHandler(error, this.constructor.name, this.findByCourseId.name);
     }
   }
 
   @Get('student/:id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Estudante' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Activities by Student ID' })
   @ApiParam({
     name: 'id',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
-    description: 'ID do Estudante',
+    description: 'Student ID',
   })
   async findByStudentId(@Param('id') id: string) {
     try {
@@ -119,17 +119,17 @@ export class ActivityController {
         activities,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findByStudentId');
+      new ErrorHandler(error, this.constructor.name, this.findByStudentId.name);
     }
   }
 
   @Get('teacher/:id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Atividades pelo ID do Professor' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Activities by Teacher ID' })
   @ApiParam({
     name: 'id',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
-    description: 'ID do Professor',
+    description: 'Teacher ID',
   })
   async findByTeacherId(@Param('id') id: string) {
     try {
@@ -140,17 +140,17 @@ export class ActivityController {
         activities,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findByTeacherId');
+      new ErrorHandler(error, this.constructor.name, this.findByTeacherId.name);
     }
   }
 
   @Get('subject/:id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Atividades pelo ID da Disciplina' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Activities by Subject ID' })
   @ApiParam({
     name: 'id',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
-    description: 'ID da Disciplina',
+    description: 'Subject ID',
   })
   async findBySubjectId(@Param('id') id: string) {
     try {
@@ -161,17 +161,17 @@ export class ActivityController {
         activities,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findBySubjectId');
+      new ErrorHandler(error, this.constructor.name, this.findBySubjectId.name);
     }
   }
 
   @Patch(':id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Atualização de Atividades' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Update Activity' })
   @ApiParam({
     name: 'id',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
-    description: 'ID da Atividade',
+    description: 'Activity ID',
   })
   async update(
     @Param('id') id: string,
@@ -185,17 +185,17 @@ export class ActivityController {
         activity,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'update');
+      new ErrorHandler(error, this.constructor.name, this.update.name);
     }
   }
 
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @Delete(':id')
-  @ApiOperation({ summary: 'Remoção de Atividades' })
+  @ApiOperation({ summary: 'Delete Activity' })
   @ApiParam({
     name: 'id',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
-    description: 'ID da Atividade',
+    description: 'Activity ID',
   })
   async remove(@Param('id') id: string) {
     try {
@@ -205,7 +205,7 @@ export class ActivityController {
         message: 'Activity deleted successfully.',
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'remove');
+      new ErrorHandler(error, this.constructor.name, this.remove.name);
     }
   }
 }

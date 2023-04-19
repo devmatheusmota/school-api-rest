@@ -6,8 +6,8 @@ export interface IActivityRepository {
   delete(id: string): Promise<void>;
   findById(id: string): Promise<Activity | undefined>;
   findAll(): Promise<Activity[]>;
-  findByStudentId(studentId: string): Promise<Activity[]>;
-  findByTeacherId(teacherId: string): Promise<Activity[]>;
-  findByCourseId(courseId: string): Promise<Activity[]>;
-  findBySubjectId(subjectId: string): Promise<Activity[]>;
+  findByStudentId(student_id: string): Promise<Activity[]>;
+  findByTeacherId(teacher_id: string): Promise<Activity[]>;
+  findByCourseId(course_id: string): Promise<Activity[]>;
+  findBySubjectId(subject_id: string): Promise<Activity[]>;
 }

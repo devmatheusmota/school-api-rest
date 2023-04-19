@@ -27,9 +27,9 @@ export class InMemorySubjectRepository implements ISubjectRepository {
     return subject;
   }
 
-  async findByTeacherId(teacherId: string): Promise<Subject[]> {
+  async findByTeacherId(teacher_id: string): Promise<Subject[]> {
     const subject = this.subject.filter(
-      (subject) => subject.teacher_id === teacherId,
+      (subject) => subject.teacher_id === teacher_id,
     );
 
     return subject;

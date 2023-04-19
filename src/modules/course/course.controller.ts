@@ -32,7 +32,7 @@ export class CourseController {
 
   @Post()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Criação de Cursos' })
+  @ApiOperation({ summary: 'Create Course' })
   async create(@Body() createCourseDto: CreateCourseDto) {
     try {
       const course = await this.courseService.create(createCourseDto);
@@ -48,15 +48,17 @@ export class CourseController {
 
   @Post('student')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Adicionar/Remover Aluno ao Curso - Toggle' })
+  @ApiOperation({ summary: 'Add/Remove Student To/From Course - Toggle' })
   async addStudentToCourse(@Body() addStudentToCourse: AddStudentToCourseDto) {
     try {
-      const course = await this.courseService.addStudentToCourse(
+      const message = await this.courseService.addStudentToCourse(
         addStudentToCourse.course_id,
         addStudentToCourse.student_id,
       );
 
-      return course;
+      return {
+        message,
+      };
     } catch (error) {
       new ErrorHandler(
         error,
@@ -68,17 +70,19 @@ export class CourseController {
 
   @Post('teacher')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Adicionar/Remover Professor ao Curso - Toggle' })
+  @ApiOperation({ summary: 'Add/Remove Teacher To/From Course' })
   async addTeacherToCourse(
     @Body() addTeacherToCourseDto: AddTeacherToCourseDto,
   ) {
     try {
-      const course = await this.courseService.addTeacherToCourse(
+      const message = await this.courseService.addTeacherToCourse(
         addTeacherToCourseDto.course_id,
         addTeacherToCourseDto.teacher_id,
       );
 
-      return course;
+      return {
+        message,
+      };
     } catch (error) {
       new ErrorHandler(
         error,
@@ -90,7 +94,7 @@ export class CourseController {
 
   @Get()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Cursos' })
+  @ApiOperation({ summary: 'Read Course' })
   async findAll() {
     try {
       const courses = await this.courseService.findAll();
@@ -106,12 +110,12 @@ export class CourseController {
 
   @Get(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Cursos pelo ID' })
+  @ApiOperation({ summary: 'Read Course By ID' })
   @ApiParam({
     name: 'id',
     type: String,
     required: true,
-    description: 'ID do Curso',
+    description: 'Course ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async findOne(@Param('id') id: string) {
@@ -129,12 +133,12 @@ export class CourseController {
 
   @Get('student/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Cursos pelo ID do Aluno' })
+  @ApiOperation({ summary: 'Read Course By Student ID' })
   @ApiParam({
     name: 'id',
     type: String,
     required: true,
-    description: 'ID do Aluno',
+    description: 'Student ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async findByStudentId(@Param('id') id: string) {
@@ -152,12 +156,12 @@ export class CourseController {
 
   @Get('teacher/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Cursos pelo ID do Professor' })
+  @ApiOperation({ summary: 'Read Course By Teacher ID' })
   @ApiParam({
     name: 'id',
     type: String,
     required: true,
-    description: 'ID do Professor',
+    description: 'Teacher ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async findByTeacherId(@Param('id') id: string) {
@@ -175,12 +179,12 @@ export class CourseController {
 
   @Patch(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Atualização de Cursos' })
+  @ApiOperation({ summary: 'Update Course' })
   @ApiParam({
     name: 'id',
     type: String,
     required: true,
-    description: 'ID do Curso',
+    description: 'Course ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async update(
@@ -201,12 +205,12 @@ export class CourseController {
 
   @Delete(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Remoção de Cursos' })
+  @ApiOperation({ summary: 'Delete Course' })
   @ApiParam({
     name: 'id',
     type: String,
     required: true,
-    description: 'ID do Curso',
+    description: 'Course ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async remove(@Param('id') id: string) {

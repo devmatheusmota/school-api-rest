@@ -21,9 +21,9 @@ export class InMemoryStudentCardRepository implements IStudentCardRepository {
     return studentCard;
   }
 
-  async findByStudentId(studentId: string): Promise<StudentCard> {
+  async findByStudentId(student_id: string): Promise<StudentCard> {
     const studentCard = this.studentCards.find(
-      (studentCard) => studentCard.student_id === studentId,
+      (studentCard) => studentCard.student_id === student_id,
     );
 
     return studentCard;

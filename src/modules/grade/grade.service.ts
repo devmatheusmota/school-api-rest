@@ -50,8 +50,8 @@ export class GradeService {
     return grade;
   }
 
-  async findByStudentId(studentId: string) {
-    const grades = await this.gradeRepository.findByStudentId(studentId);
+  async findByStudentId(student_id: string) {
+    const grades = await this.gradeRepository.findByStudentId(student_id);
 
     if (grades.length === 0) {
       throw new NotFoundException('No grades found');
@@ -60,8 +60,8 @@ export class GradeService {
     return grades;
   }
 
-  async findByActivityId(activityId: string) {
-    const grades = await this.gradeRepository.findByActivityId(activityId);
+  async findByActivityId(activity_id: string) {
+    const grades = await this.gradeRepository.findByActivityId(activity_id);
 
     if (grades.length === 0) {
       throw new NotFoundException('No grades found');
@@ -70,8 +70,8 @@ export class GradeService {
     return grades;
   }
 
-  async findByCourseId(courseId: string) {
-    const grades = await this.gradeRepository.findByCourseId(courseId);
+  async findByCourseId(course_id: string) {
+    const grades = await this.gradeRepository.findByCourseId(course_id);
 
     if (grades.length === 0) {
       throw new NotFoundException('No grades found');

@@ -26,6 +26,7 @@ describe('ActivityService', () => {
   describe('create', () => {
     it('should create an activity', async () => {
       const activity = await service.create({
+        subject_id: 'Test Subject ID',
         name: 'Test Activity',
         description: 'Test Description',
         course_id: 'Test Course ID',
@@ -42,6 +43,7 @@ describe('ActivityService', () => {
   describe('findAll', () => {
     it('should return an array of activities', async () => {
       await service.create({
+        subject_id: 'Test Subject ID',
         name: 'Test Activity',
         description: 'Test Description',
         course_id: 'Test Course ID',
@@ -61,6 +63,7 @@ describe('ActivityService', () => {
   describe('findOne', () => {
     it('should return an activity', async () => {
       const activity = await service.create({
+        subject_id: 'Test Subject ID',
         name: 'Test Activity',
         description: 'Test Description',
         course_id: 'Test Course ID',
@@ -83,6 +86,7 @@ describe('ActivityService', () => {
   describe('findByCourseId', () => {
     it('should return an array of activities', async () => {
       await service.create({
+        subject_id: 'Test Subject ID',
         name: 'Test Activity',
         description: 'Test Description',
         course_id: 'Test Course ID',
@@ -105,6 +109,7 @@ describe('ActivityService', () => {
   describe('findByStudentId', () => {
     it('should return an array of activities', async () => {
       await service.create({
+        subject_id: 'Test Subject ID',
         name: 'Test Activity',
         description: 'Test Description',
         course_id: 'Test Course ID',
@@ -129,6 +134,7 @@ describe('ActivityService', () => {
   describe('update', () => {
     it('should update an activity', async () => {
       const activity = await service.create({
+        subject_id: 'Test Subject ID',
         name: 'Test Activity',
         description: 'Test Description',
         course_id: 'Test Course ID',
@@ -167,6 +173,7 @@ describe('ActivityService', () => {
   describe('remove', () => {
     it('should remove an activity', async () => {
       const activity = await service.create({
+        subject_id: 'Test Subject ID',
         name: 'Test Activity',
         description: 'Test Description',
         course_id: 'Test Course ID',

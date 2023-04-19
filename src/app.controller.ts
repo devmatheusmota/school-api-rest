@@ -9,7 +9,7 @@ export class AppController {
     return {
       status: 'OK',
       message: 'API working fine.',
-      documentation: `${process.env.APP_URL}/docs`,
+      documentation: `${process.env.API_URL || 'http://localhost:3000'}/docs`,
     };
   }
 }

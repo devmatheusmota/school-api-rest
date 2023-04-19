@@ -2,11 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateCourseDto {
-  @ApiProperty({ example: 'Matemática', description: 'Nome do Curso' })
+  @ApiProperty({ description: "Course's name", example: 'Math' })
   @IsNotEmpty({ message: 'name is required' })
   name: string;
 
-  @ApiProperty({ example: '2023', description: 'Ano do Curso' })
+  @ApiProperty({ example: '2023', description: "Courses's Year" })
   @IsNotEmpty({ message: 'year is required' })
   year: number;
 }

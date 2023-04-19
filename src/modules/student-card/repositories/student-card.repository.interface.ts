@@ -5,6 +5,6 @@ export interface IStudentCardRepository {
   update(id: string, studentCard: Partial<StudentCard>): Promise<StudentCard>;
   delete(id: string): Promise<void>;
   findById(id: string): Promise<StudentCard | undefined>;
-  findByStudentId(studentId: string): Promise<StudentCard | undefined>;
+  findByStudentId(student_id: string): Promise<StudentCard | undefined>;
   findAll(): Promise<StudentCard[]>;
 }

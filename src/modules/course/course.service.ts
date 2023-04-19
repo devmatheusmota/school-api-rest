@@ -50,8 +50,8 @@ export class CourseService {
     return course;
   }
 
-  async findByStudentId(studentId: string) {
-    const course = await this.courseRepository.findByStudentId(studentId);
+  async findByStudentId(student_id: string) {
+    const course = await this.courseRepository.findByStudentId(student_id);
 
     if (!course) {
       throw new NotFoundException('Course not found.');
@@ -60,8 +60,8 @@ export class CourseService {
     return course;
   }
 
-  async findByTeacherId(teacherId: string) {
-    const courses = await this.courseRepository.findByTeacherId(teacherId);
+  async findByTeacherId(teacher_id: string) {
+    const courses = await this.courseRepository.findByTeacherId(teacher_id);
 
     if (courses.length === 0) {
       throw new NotFoundException('No courses found.');
@@ -70,44 +70,58 @@ export class CourseService {
     return courses;
   }
 
-  async addStudentToCourse(courseId: string, studentId: string) {
-    const courseExists = await this.courseRepository.findById(courseId);
+  async addStudentToCourse(course_id: string, student_id: string) {
+    const courseExists = await this.courseRepository.findById(course_id);
 
     if (!courseExists) {
       throw new NotFoundException('Course not found.');
     }
 
-    if (courseExists.Student.map((student) => student.id).includes(studentId)) {
-      await this.courseRepository.removeStudentFromCourse(courseId, studentId);
+    const isStudentAlreadyInCourse = courseExists.Student.map(
+      (student) => student.id,
+    ).includes(student_id);
+
+    if (isStudentAlreadyInCourse) {
+      await this.courseRepository.removeStudentFromCourse(
+        course_id,
+        student_id,
+      );
 
       return {
         message: 'Student removed from course.',
       };
     }
 
-    await this.courseRepository.addStudentToCourse(courseId, studentId);
+    await this.courseRepository.addStudentToCourse(course_id, student_id);
 
     return {
       message: 'Student added to course.',
     };
   }
 
-  async addTeacherToCourse(courseId: string, teacherId: string) {
-    const courseExists = await this.courseRepository.findById(courseId);
+  async addTeacherToCourse(course_id: string, teacher_id: string) {
+    const courseExists = await this.courseRepository.findById(course_id);
 
     if (!courseExists) {
       throw new NotFoundException('Course not found.');
     }
 
-    if (courseExists.Teacher.map((student) => student.id).includes(teacherId)) {
-      await this.courseRepository.removeTeacherFromCourse(courseId, teacherId);
+    const isTeacherAlreadyInCourse = courseExists.Teacher.map(
+      (teacher) => teacher.id,
+    ).includes(teacher_id);
+
+    if (isTeacherAlreadyInCourse) {
+      await this.courseRepository.removeTeacherFromCourse(
+        course_id,
+        teacher_id,
+      );
 
       return {
         message: 'Teacher removed from course.',
       };
     }
 
-    await this.courseRepository.addTeacherToCourse(courseId, teacherId);
+    await this.courseRepository.addTeacherToCourse(course_id, teacher_id);
 
     return {
       message: 'Teacher added to course.',

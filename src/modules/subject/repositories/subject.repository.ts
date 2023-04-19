@@ -45,10 +45,10 @@ export class SubjectRepository implements ISubjectRepository {
     return subject;
   }
 
-  async findByTeacherId(teacherId: string): Promise<Subject[]> {
+  async findByTeacherId(teacher_id: string): Promise<Subject[]> {
     const subject = await this.prisma.subject.findMany({
       where: {
-        teacher_id: teacherId,
+        teacher_id: teacher_id,
       },
     });
 

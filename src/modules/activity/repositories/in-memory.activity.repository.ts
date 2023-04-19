@@ -41,9 +41,9 @@ export class InMemoryActivityRepository implements IActivityRepository {
     return activity;
   }
 
-  async findByStudentId(studentId: string): Promise<Activity[]> {
+  async findByStudentId(student_id: string): Promise<Activity[]> {
     const activity = this.activity.map((activity) => {
-      if (activity.course.Student.map((student) => student.id === studentId)) {
+      if (activity.course.Student.map((student) => student.id === student_id)) {
         return activity;
       }
     });
@@ -51,9 +51,9 @@ export class InMemoryActivityRepository implements IActivityRepository {
     return activity;
   }
 
-  async findByTeacherId(teacherId: string): Promise<Activity[]> {
+  async findByTeacherId(teacher_id: string): Promise<Activity[]> {
     const activities = this.activity.map((activity) => {
-      if (activity.course.Teacher.map((teacher) => teacher.id === teacherId)) {
+      if (activity.course.Teacher.map((teacher) => teacher.id === teacher_id)) {
         return activity;
       }
     });
@@ -61,9 +61,9 @@ export class InMemoryActivityRepository implements IActivityRepository {
     return activities;
   }
 
-  async findByCourseId(courseId: string): Promise<Activity[]> {
+  async findByCourseId(course_id: string): Promise<Activity[]> {
     const activities = this.activity.map((activity) => {
-      if (activity.course.id === courseId) {
+      if (activity.course.id === course_id) {
         return activity;
       }
     });
@@ -71,9 +71,9 @@ export class InMemoryActivityRepository implements IActivityRepository {
     return activities;
   }
 
-  async findBySubjectId(subjectId: string): Promise<Activity[]> {
+  async findBySubjectId(subject_id: string): Promise<Activity[]> {
     const activities = this.activity.map((activity) => {
-      if (activity.subject_id === subjectId) {
+      if (activity.subject_id === subject_id) {
         return activity;
       }
     });

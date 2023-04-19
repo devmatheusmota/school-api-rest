@@ -38,10 +38,10 @@ export class CourseRepository implements ICourseRepository {
     return activities;
   }
 
-  async findByStudentId(studentId: string): Promise<Course> {
+  async findByStudentId(student_id: string): Promise<Course> {
     const student = await this.prisma.student.findUnique({
       where: {
-        id: studentId,
+        id: student_id,
       },
     });
 
@@ -53,7 +53,7 @@ export class CourseRepository implements ICourseRepository {
       where: {
         Student: {
           some: {
-            id: studentId,
+            id: student_id,
           },
         },
       },
@@ -62,10 +62,10 @@ export class CourseRepository implements ICourseRepository {
     return course;
   }
 
-  async findByTeacherId(teacherId: string): Promise<Course[]> {
+  async findByTeacherId(teacher_id: string): Promise<Course[]> {
     const teacher = await this.prisma.teacher.findUnique({
       where: {
-        id: teacherId,
+        id: teacher_id,
       },
     });
 
@@ -77,7 +77,7 @@ export class CourseRepository implements ICourseRepository {
       where: {
         Teacher: {
           some: {
-            id: teacherId,
+            id: teacher_id,
           },
         },
       },
@@ -86,10 +86,13 @@ export class CourseRepository implements ICourseRepository {
     return course;
   }
 
-  async addStudentToCourse(courseId: string, studentId: string): Promise<void> {
+  async addStudentToCourse(
+    course_id: string,
+    student_id: string,
+  ): Promise<void> {
     const course = await this.prisma.course.findUnique({
       where: {
-        id: courseId,
+        id: course_id,
       },
     });
 
@@ -99,7 +102,7 @@ export class CourseRepository implements ICourseRepository {
 
     const student = await this.prisma.student.findUnique({
       where: {
-        id: studentId,
+        id: student_id,
       },
     });
 
@@ -109,12 +112,12 @@ export class CourseRepository implements ICourseRepository {
 
     await this.prisma.course.update({
       where: {
-        id: courseId,
+        id: course_id,
       },
       data: {
         Student: {
           connect: {
-            id: studentId,
+            id: student_id,
           },
         },
       },
@@ -122,12 +125,12 @@ export class CourseRepository implements ICourseRepository {
   }
 
   async removeStudentFromCourse(
-    courseId: string,
-    studentId: string,
+    course_id: string,
+    student_id: string,
   ): Promise<void> {
     const course = await this.prisma.course.findUnique({
       where: {
-        id: courseId,
+        id: course_id,
       },
     });
 
@@ -137,7 +140,7 @@ export class CourseRepository implements ICourseRepository {
 
     const student = await this.prisma.student.findUnique({
       where: {
-        id: studentId,
+        id: student_id,
       },
     });
 
@@ -147,22 +150,25 @@ export class CourseRepository implements ICourseRepository {
 
     await this.prisma.course.update({
       where: {
-        id: courseId,
+        id: course_id,
       },
       data: {
         Student: {
           disconnect: {
-            id: studentId,
+            id: student_id,
           },
         },
       },
     });
   }
 
-  async addTeacherToCourse(courseId: string, teacherId: string): Promise<void> {
+  async addTeacherToCourse(
+    course_id: string,
+    teacher_id: string,
+  ): Promise<void> {
     const course = await this.prisma.course.findUnique({
       where: {
-        id: courseId,
+        id: course_id,
       },
     });
 
@@ -172,7 +178,7 @@ export class CourseRepository implements ICourseRepository {
 
     const teacher = await this.prisma.teacher.findUnique({
       where: {
-        id: teacherId,
+        id: teacher_id,
       },
     });
 
@@ -182,12 +188,12 @@ export class CourseRepository implements ICourseRepository {
 
     await this.prisma.course.update({
       where: {
-        id: courseId,
+        id: course_id,
       },
       data: {
         Teacher: {
           connect: {
-            id: teacherId,
+            id: teacher_id,
           },
         },
       },
@@ -195,12 +201,12 @@ export class CourseRepository implements ICourseRepository {
   }
 
   async removeTeacherFromCourse(
-    courseId: string,
-    teacherId: string,
+    course_id: string,
+    teacher_id: string,
   ): Promise<void> {
     const course = await this.prisma.course.findUnique({
       where: {
-        id: courseId,
+        id: course_id,
       },
     });
 
@@ -210,7 +216,7 @@ export class CourseRepository implements ICourseRepository {
 
     const teacher = await this.prisma.teacher.findUnique({
       where: {
-        id: teacherId,
+        id: teacher_id,
       },
     });
 
@@ -220,12 +226,12 @@ export class CourseRepository implements ICourseRepository {
 
     await this.prisma.course.update({
       where: {
-        id: courseId,
+        id: course_id,
       },
       data: {
         Teacher: {
           disconnect: {
-            id: teacherId,
+            id: teacher_id,
           },
         },
       },

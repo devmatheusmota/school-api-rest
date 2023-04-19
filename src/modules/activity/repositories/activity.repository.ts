@@ -41,10 +41,10 @@ export class ActivityRepository implements IActivityRepository {
     return activities;
   }
 
-  async findByStudentId(studentId: string): Promise<Activity[]> {
+  async findByStudentId(student_id: string): Promise<Activity[]> {
     const student = await this.prisma.student.findUnique({
       where: {
-        id: studentId,
+        id: student_id,
       },
     });
 
@@ -57,7 +57,7 @@ export class ActivityRepository implements IActivityRepository {
         Course: {
           Student: {
             some: {
-              id: studentId,
+              id: student_id,
             },
           },
         },
@@ -66,10 +66,10 @@ export class ActivityRepository implements IActivityRepository {
 
     return activity;
   }
-  async findByTeacherId(teacherId: string): Promise<Activity[]> {
+  async findByTeacherId(teacher_id: string): Promise<Activity[]> {
     const teacher = await this.prisma.teacher.findUnique({
       where: {
-        id: teacherId,
+        id: teacher_id,
       },
     });
 
@@ -82,7 +82,7 @@ export class ActivityRepository implements IActivityRepository {
         Course: {
           Teacher: {
             some: {
-              id: teacherId,
+              id: teacher_id,
             },
           },
         },
@@ -92,10 +92,10 @@ export class ActivityRepository implements IActivityRepository {
     return activities;
   }
 
-  async findByCourseId(courseId: string): Promise<Activity[]> {
+  async findByCourseId(course_id: string): Promise<Activity[]> {
     const course = await this.prisma.course.findUnique({
       where: {
-        id: courseId,
+        id: course_id,
       },
     });
 
@@ -105,7 +105,7 @@ export class ActivityRepository implements IActivityRepository {
 
     const activities = await this.prisma.activity.findMany({
       where: {
-        course_id: courseId,
+        course_id: course_id,
       },
     });
 

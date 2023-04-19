@@ -25,10 +25,10 @@ export class StudentCardRepository implements IStudentCardRepository {
     return studentCard;
   }
 
-  async findByStudentId(studentId: string): Promise<StudentCard> {
+  async findByStudentId(student_id: string): Promise<StudentCard> {
     const studentCard = await this.prisma.studentCard.findUnique({
       where: {
-        student_id: studentId,
+        student_id: student_id,
       },
     });
 

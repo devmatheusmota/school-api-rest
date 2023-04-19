@@ -6,11 +6,11 @@ export interface ICourseRepository {
   delete(id: string): Promise<void>;
   findById(id: string): Promise<Course | undefined>;
   findAll(): Promise<Course[]>;
-  findByStudentId(studentId: string): Promise<Course>;
-  findByTeacherId(teacherId: string): Promise<Course[]>;
+  findByStudentId(student_id: string): Promise<Course>;
+  findByTeacherId(teacher_id: string): Promise<Course[]>;
   checkIfCourseExists(name: string, year: number): Promise<boolean>;
-  addStudentToCourse(courseId: string, studentId: string): Promise<void>;
-  removeStudentFromCourse(courseId: string, studentId: string): Promise<void>;
-  addTeacherToCourse(courseId: string, teacherId: string): Promise<void>;
-  removeTeacherFromCourse(courseId: string, teacherId: string): Promise<void>;
+  addStudentToCourse(course_id: string, student_id: string): Promise<void>;
+  removeStudentFromCourse(course_id: string, student_id: string): Promise<void>;
+  addTeacherToCourse(course_id: string, teacher_id: string): Promise<void>;
+  removeTeacherFromCourse(course_id: string, teacher_id: string): Promise<void>;
 }
