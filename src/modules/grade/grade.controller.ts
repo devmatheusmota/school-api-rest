@@ -30,7 +30,7 @@ export class GradeController {
 
   @Post()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Lançamento de Notas' })
+  @ApiOperation({ summary: 'Create Grade' })
   async create(@Body() createGradeDto: CreateGradeDto) {
     try {
       const grade = await this.gradeService.create(createGradeDto);
@@ -45,8 +45,8 @@ export class GradeController {
   }
 
   @Get()
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Notas' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Grade' })
   async findAll() {
     try {
       const grades = await this.gradeService.findAll();
@@ -61,12 +61,12 @@ export class GradeController {
   }
 
   @Get(':id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Notas por ID' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Grade by ID' })
   @ApiParam({
     name: 'id',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
-    description: 'ID da Nota',
+    description: 'Grade ID',
   })
   async findOne(@Param('id') id: string) {
     try {
@@ -82,12 +82,12 @@ export class GradeController {
   }
 
   @Get('student/:id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Notas por ID do Aluno' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Grade by Student ID' })
   @ApiParam({
     name: 'id',
+    description: 'Student ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
-    description: 'ID do Aluno',
   })
   async findByStudentId(@Param('id') id: string) {
     try {
@@ -103,12 +103,12 @@ export class GradeController {
   }
 
   @Get('activity/:id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Notas por ID da Atividade' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Grade by Activity ID' })
   @ApiParam({
     name: 'id',
+    description: 'Activity ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
-    description: 'ID da Atividade',
   })
   async findByActivityId(@Param('id') id: string) {
     try {
@@ -128,12 +128,12 @@ export class GradeController {
   }
 
   @Get('course/:id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Notas por ID do Curso' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Grade by Course ID' })
   @ApiParam({
     name: 'id',
+    description: 'Course ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
-    description: 'ID do Curso',
   })
   async findByCourseId(@Param('id') id: string) {
     try {
@@ -150,11 +150,11 @@ export class GradeController {
 
   @Patch(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Atualização de Notas' })
+  @ApiOperation({ summary: 'Update Grade' })
   @ApiParam({
     name: 'id',
+    description: 'Grade ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
-    description: 'ID da Nota',
   })
   async update(
     @Param('id') id: string,
@@ -168,17 +168,17 @@ export class GradeController {
         grade,
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'update');
+      new ErrorHandler(error, this.constructor.name, this.update.name);
     }
   }
 
   @Delete(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Remoção de Notas' })
+  @ApiOperation({ summary: 'Delete Grade' })
   @ApiParam({
     name: 'id',
+    description: 'Grade ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
-    description: 'ID da Nota',
   })
   async remove(@Param('id') id: string) {
     try {
@@ -188,7 +188,7 @@ export class GradeController {
         message: 'Grade deleted successfully.',
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'remove');
+      new ErrorHandler(error, this.constructor.name, this.remove.name);
     }
   }
 }

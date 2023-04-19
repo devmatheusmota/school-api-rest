@@ -12,51 +12,52 @@ import { IStudentCardRepository } from './repositories/student-card.repository.i
 export class StudentCardService {
   constructor(
     @Inject('StudentCardRepository')
-    private readonly studentCardRepository: IStudentCardRepository,
+    private readonly student_cardRepository: IStudentCardRepository,
   ) {}
 
   async create(createStudentCardDto: CreateStudentCardDto) {
-    const studentCardExists = await this.studentCardRepository.findByStudentId(
-      createStudentCardDto.student_id,
-    );
+    const student_cardExists =
+      await this.student_cardRepository.findByStudentId(
+        createStudentCardDto.student_id,
+      );
 
-    if (studentCardExists) {
+    if (student_cardExists) {
       throw new BadRequestException('Student card already exists.');
     }
 
     createStudentCardDto.due_date = new Date(createStudentCardDto.due_date);
 
-    const studentCard = await this.studentCardRepository.create(
+    const student_card = await this.student_cardRepository.create(
       createStudentCardDto,
     );
 
-    return studentCard;
+    return student_card;
   }
 
   async findAll() {
-    const studentCards = await this.studentCardRepository.findAll();
+    const student_cards = await this.student_cardRepository.findAll();
 
-    if (studentCards.length === 0) {
+    if (student_cards.length === 0) {
       throw new NotFoundException('No student cards found.');
     }
 
-    return studentCards;
+    return student_cards;
   }
 
   async findOne(id: string) {
-    const studentCard = await this.studentCardRepository.findById(id);
+    const student_card = await this.student_cardRepository.findById(id);
 
-    if (!studentCard) {
+    if (!student_card) {
       throw new NotFoundException('Student card not found.');
     }
 
-    return studentCard;
+    return student_card;
   }
 
   async update(id: string, updateStudentCardDto: UpdateStudentCardDto) {
-    const studentCardExists = await this.studentCardRepository.findById(id);
+    const student_cardExists = await this.student_cardRepository.findById(id);
 
-    if (!studentCardExists) {
+    if (!student_cardExists) {
       throw new NotFoundException('Student card not found.');
     }
 
@@ -64,7 +65,7 @@ export class StudentCardService {
       updateStudentCardDto.due_date = new Date(updateStudentCardDto.due_date);
     }
 
-    const updatedStudentCard = await this.studentCardRepository.update(
+    const updatedStudentCard = await this.student_cardRepository.update(
       id,
       updateStudentCardDto,
     );
@@ -73,12 +74,12 @@ export class StudentCardService {
   }
 
   async remove(id: string) {
-    const studentCardExists = await this.studentCardRepository.findById(id);
+    const student_cardExists = await this.student_cardRepository.findById(id);
 
-    if (!studentCardExists) {
+    if (!student_cardExists) {
       throw new NotFoundException('Student card not found.');
     }
 
-    await this.studentCardRepository.delete(id);
+    await this.student_cardRepository.delete(id);
   }
 }

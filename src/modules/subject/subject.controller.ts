@@ -30,7 +30,7 @@ export class SubjectController {
 
   @Post()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Criação de Disciplina' })
+  @ApiOperation({ summary: 'Create Subject' })
   async create(@Body() createSubjectDto: CreateSubjectDto) {
     try {
       const subject = await this.subjectService.create(createSubjectDto);
@@ -40,13 +40,13 @@ export class SubjectController {
         subject,
       };
     } catch (error) {
-      new ErrorHandler(error, 'SubjectController', 'create');
+      new ErrorHandler(error, this.constructor.name, this.create.name);
     }
   }
 
   @Get()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Disciplinas' })
+  @ApiOperation({ summary: 'Read Subject' })
   async findAll() {
     try {
       const subjects = await this.subjectService.findAll();
@@ -56,14 +56,18 @@ export class SubjectController {
         subjects,
       };
     } catch (error) {
-      new ErrorHandler(error, 'SubjectController', 'findAll');
+      new ErrorHandler(error, this.constructor.name, this.findAll.name);
     }
   }
 
   @Get(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Disciplina' })
-  @ApiParam({ name: 'id', example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd' })
+  @ApiOperation({ summary: 'Read Subject by ID' })
+  @ApiParam({
+    name: 'id',
+    description: 'Subject ID',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+  })
   async findOne(@Param('id') id: string) {
     try {
       const subject = await this.subjectService.findOne(id);
@@ -73,14 +77,18 @@ export class SubjectController {
         subject,
       };
     } catch (error) {
-      new ErrorHandler(error, 'SubjectController', 'findOne');
+      new ErrorHandler(error, this.constructor.name, this.findOne.name);
     }
   }
 
   @Get('/teacher/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Disciplina pelo ID do Professor' })
-  @ApiParam({ name: 'id', example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd' })
+  @ApiOperation({ summary: 'Read Subject by Teacher ID' })
+  @ApiParam({
+    name: 'id',
+    description: 'Teacher ID',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+  })
   async findByTeacherId(@Param('id') id: string) {
     try {
       const subjects = await this.subjectService.findByTeacherId(id);
@@ -90,14 +98,18 @@ export class SubjectController {
         subject: subjects,
       };
     } catch (error) {
-      new ErrorHandler(error, 'SubjectController', 'findByTeacherId');
+      new ErrorHandler(error, this.constructor.name, this.findByTeacherId.name);
     }
   }
 
   @Patch(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Atualização de Disciplina' })
-  @ApiParam({ name: 'id', example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd' })
+  @ApiOperation({ summary: 'Update Subject' })
+  @ApiParam({
+    name: 'id',
+    description: 'Subject ID',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+  })
   async update(
     @Param('id') id: string,
     @Body() updateSubjectDto: UpdateSubjectDto,
@@ -110,14 +122,18 @@ export class SubjectController {
         subject,
       };
     } catch (error) {
-      new ErrorHandler(error, 'SubjectController', 'update');
+      new ErrorHandler(error, this.constructor.name, this.update.name);
     }
   }
 
   @Delete(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Remoção de Disciplina' })
-  @ApiParam({ name: 'id', example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd' })
+  @ApiOperation({ summary: 'Delete Subject' })
+  @ApiParam({
+    name: 'id',
+    description: 'Subject ID',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+  })
   async remove(@Param('id') id: string) {
     try {
       await this.subjectService.remove(id);
@@ -126,7 +142,7 @@ export class SubjectController {
         message: 'Subject deleted successfully.',
       };
     } catch (error) {
-      new ErrorHandler(error, 'SubjectController', 'remove');
+      new ErrorHandler(error, this.constructor.name, this.remove.name);
     }
   }
 }

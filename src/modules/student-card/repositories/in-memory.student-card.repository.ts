@@ -3,53 +3,53 @@ import { StudentCard } from '../entities/student-card.entity';
 import { IStudentCardRepository } from './student-card.repository.interface';
 
 export class InMemoryStudentCardRepository implements IStudentCardRepository {
-  private studentCards: StudentCard[] = [];
+  private student_cards: StudentCard[] = [];
 
   async create(data: StudentCard): Promise<StudentCard> {
     data.id = randomUUID();
 
-    this.studentCards.push(data);
+    this.student_cards.push(data);
 
     return data;
   }
 
   async findById(id: string): Promise<StudentCard> {
-    const studentCard = this.studentCards.find(
-      (studentCard) => studentCard.id === id,
+    const student_card = this.student_cards.find(
+      (student_card) => student_card.id === id,
     );
 
-    return studentCard;
+    return student_card;
   }
 
   async findByStudentId(student_id: string): Promise<StudentCard> {
-    const studentCard = this.studentCards.find(
-      (studentCard) => studentCard.student_id === student_id,
+    const student_card = this.student_cards.find(
+      (student_card) => student_card.student_id === student_id,
     );
 
-    return studentCard;
+    return student_card;
   }
 
   async findAll(): Promise<StudentCard[]> {
-    const studentCards = this.studentCards;
+    const student_cards = this.student_cards;
 
-    return studentCards;
+    return student_cards;
   }
 
-  async update(id: string, studentCard: StudentCard): Promise<StudentCard> {
-    const studentCardIndex = this.studentCards.findIndex(
-      (studentCard) => studentCard.id === id,
+  async update(id: string, student_card: StudentCard): Promise<StudentCard> {
+    const student_cardIndex = this.student_cards.findIndex(
+      (student_card) => student_card.id === id,
     );
-    studentCard.id = this.studentCards[studentCardIndex].id;
-    this.studentCards[studentCardIndex] = studentCard;
+    student_card.id = this.student_cards[student_cardIndex].id;
+    this.student_cards[student_cardIndex] = student_card;
 
-    return studentCard;
+    return student_card;
   }
 
   async delete(id: string): Promise<void> {
-    const studentCardIndex = this.studentCards.findIndex(
-      (studentCard) => studentCard.id === id,
+    const student_cardIndex = this.student_cards.findIndex(
+      (student_card) => student_card.id === id,
     );
 
-    this.studentCards.splice(studentCardIndex, 1);
+    this.student_cards.splice(student_cardIndex, 1);
   }
 }

@@ -26,20 +26,20 @@ import {
 @UseGuards(AuthGuard('jwt'))
 @Controller('student-card')
 export class StudentCardController {
-  constructor(private readonly studentCardService: StudentCardService) {}
+  constructor(private readonly student_cardService: StudentCardService) {}
 
   @Post()
   @Roles(ROLE.ADMIN)
-  @ApiOperation({ summary: 'Criação de Carteira de Estudante' })
+  @ApiOperation({ summary: 'Create Student Card' })
   async create(@Body() createStudentCardDto: CreateStudentCardDto) {
     try {
-      const studentCard = await this.studentCardService.create(
+      const student_card = await this.student_cardService.create(
         createStudentCardDto,
       );
 
       return {
         message: 'Student card created successfully.',
-        studentCard,
+        student_card,
       };
     } catch (error) {
       new ErrorHandler(error, this.constructor.name, this.create.name);
@@ -47,15 +47,15 @@ export class StudentCardController {
   }
 
   @Get()
-  @Roles(ROLE.ADMIN)
-  @ApiOperation({ summary: 'Listagem de Carteiras de Estudante' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Student Card' })
   async findAll() {
     try {
-      const studentCards = await this.studentCardService.findAll();
+      const student_cards = await this.student_cardService.findAll();
 
       return {
         message: 'Student Cards',
-        studentCards,
+        student_cards,
       };
     } catch (error) {
       new ErrorHandler(error, this.constructor.name, this.findAll.name);
@@ -63,16 +63,20 @@ export class StudentCardController {
   }
 
   @Get(':id')
-  @Roles(ROLE.ADMIN)
-  @ApiOperation({ summary: 'Listagem de Carteira de Estudante' })
-  @ApiParam({ name: 'id', example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd' })
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @ApiOperation({ summary: 'Read Student Card By ID' })
+  @ApiParam({
+    name: 'id',
+    description: 'Student Card ID',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+  })
   async findOne(@Param('id') id: string) {
     try {
-      const studentCard = await this.studentCardService.findOne(id);
+      const student_card = await this.student_cardService.findOne(id);
 
       return {
         message: 'Student Card',
-        studentCard,
+        student_card,
       };
     } catch (error) {
       new ErrorHandler(error, this.constructor.name, this.findOne.name);
@@ -81,21 +85,25 @@ export class StudentCardController {
 
   @Patch(':id')
   @Roles(ROLE.ADMIN)
-  @ApiOperation({ summary: 'Atualização de Carteira de Estudante' })
-  @ApiParam({ name: 'id', example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd' })
+  @ApiOperation({ summary: 'Update Student Card' })
+  @ApiParam({
+    name: 'id',
+    description: 'Student Card ID',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+  })
   async update(
     @Param('id') id: string,
     @Body() updateStudentCardDto: UpdateStudentCardDto,
   ) {
     try {
-      const studentCard = await this.studentCardService.update(
+      const student_card = await this.student_cardService.update(
         id,
         updateStudentCardDto,
       );
 
       return {
         message: 'Student card updated successfully.',
-        studentCard,
+        student_card,
       };
     } catch (error) {
       new ErrorHandler(error, this.constructor.name, this.update.name);
@@ -104,11 +112,15 @@ export class StudentCardController {
 
   @Delete(':id')
   @Roles(ROLE.ADMIN)
-  @ApiOperation({ summary: 'Remoção de Carteira de Estudante' })
-  @ApiParam({ name: 'id', example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd' })
+  @ApiOperation({ summary: 'Delete Student Card' })
+  @ApiParam({
+    name: 'id',
+    description: 'Student Card ID',
+    example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
+  })
   async remove(@Param('id') id: string) {
     try {
-      await this.studentCardService.remove(id);
+      await this.student_cardService.remove(id);
 
       return {
         message: 'Student card deleted successfully.',

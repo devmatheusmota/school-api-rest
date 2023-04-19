@@ -2,16 +2,25 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class CreateStudentDto {
-  @ApiProperty({ example: 'John Doe', description: 'Nome do Aluno' })
+  @ApiProperty({
+    description: 'Student name',
+    example: 'John Doe',
+  })
   @IsNotEmpty({ message: 'name is required' })
   name: string;
 
-  @ApiProperty({ example: 'johndoe@gmail.com', description: 'Email do Aluno' })
+  @ApiProperty({
+    description: 'Student Email',
+    example: 'johndoe@gmail.com',
+  })
   @IsNotEmpty({ message: 'email is required' })
   @IsEmail({}, { message: 'Invalid email' })
   email: string;
 
-  @ApiProperty({ example: '123456', description: 'Senha do Aluno' })
+  @ApiProperty({
+    description: 'Student Password',
+    example: '123456',
+  })
   @IsNotEmpty({ message: 'password is required' })
   password: string;
 }

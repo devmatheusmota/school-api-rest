@@ -30,7 +30,7 @@ export class TeacherController {
 
   @Post()
   @Roles(ROLE.ADMIN)
-  @ApiOperation({ summary: 'Criação de Professor' })
+  @ApiOperation({ summary: 'Create Teacher' })
   async create(@Body() createTeacherDto: CreateTeacherDto) {
     try {
       const teacher = await this.teacherService.create(createTeacherDto);
@@ -42,13 +42,13 @@ export class TeacherController {
         },
       };
     } catch (error) {
-      new ErrorHandler(error, 'TeacherController', 'create');
+      new ErrorHandler(error, this.constructor.name, this.create.name);
     }
   }
 
   @Get()
   @Roles(ROLE.ADMIN)
-  @ApiOperation({ summary: 'Listagem de Professores' })
+  @ApiOperation({ summary: 'Read Teacher' })
   async findAll() {
     try {
       const students = await this.teacherService.findAll();
@@ -63,16 +63,16 @@ export class TeacherController {
         }),
       };
     } catch (error) {
-      new ErrorHandler(error, 'TeacherController', 'findAll');
+      new ErrorHandler(error, this.constructor.name, this.findAll.name);
     }
   }
 
   @Get(':id')
   @Roles(ROLE.ADMIN)
-  @ApiOperation({ summary: 'Listagem de Professor' })
+  @ApiOperation({ summary: 'Read Teacher By ID' })
   @ApiParam({
     name: 'id',
-    description: 'ID do Professor',
+    description: 'Teacher ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async findOne(@Param('id') id: string) {
@@ -87,16 +87,16 @@ export class TeacherController {
         },
       };
     } catch (error) {
-      new ErrorHandler(error, 'TeacherController', 'findOne');
+      new ErrorHandler(error, this.constructor.name, this.findOne.name);
     }
   }
 
   @Patch(':id')
   @Roles(ROLE.ADMIN)
-  @ApiOperation({ summary: 'Atualização de Professor' })
+  @ApiOperation({ summary: 'Update Teacher' })
   @ApiParam({
     name: 'id',
-    description: 'ID do Professor',
+    description: 'Teacher ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async update(
@@ -114,16 +114,16 @@ export class TeacherController {
         },
       };
     } catch (error) {
-      new ErrorHandler(error, 'TeacherController', 'update');
+      new ErrorHandler(error, this.constructor.name, this.update.name);
     }
   }
 
   @Delete(':id')
   @Roles(ROLE.ADMIN)
-  @ApiOperation({ summary: 'Remoção de Professor' })
+  @ApiOperation({ summary: 'Delete Teacher' })
   @ApiParam({
     name: 'id',
-    description: 'ID do Professor',
+    description: 'Teacher ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async remove(@Param('id') id: string) {
@@ -134,7 +134,7 @@ export class TeacherController {
         message: 'Teacher deleted successfully!',
       };
     } catch (error) {
-      new ErrorHandler(error, 'TeacherController', 'remove');
+      new ErrorHandler(error, this.constructor.name, this.remove.name);
     }
   }
 }

@@ -12,5 +12,5 @@ export class Student {
   public course_id?: string;
   public course?: Course;
   public grades?: Grade[];
-  public studentCard?: StudentCard;
+  public student_card?: StudentCard;
 }

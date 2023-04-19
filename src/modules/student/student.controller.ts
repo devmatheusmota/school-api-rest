@@ -32,7 +32,7 @@ export class StudentController {
 
   @Post()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Criação de Alunos' })
+  @ApiOperation({ summary: 'Create Student' })
   async create(@Body() createStudentDto: CreateStudentDto) {
     try {
       const student = await this.studentService.create(createStudentDto);
@@ -45,13 +45,13 @@ export class StudentController {
         },
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'create');
+      new ErrorHandler(error, this.constructor.name, this.create.name);
     }
   }
 
   @Get()
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Alunos' })
+  @ApiOperation({ summary: 'Read Student' })
   async findAll() {
     try {
       const students = await this.studentService.findAll();
@@ -66,7 +66,7 @@ export class StudentController {
         }),
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findAll');
+      new ErrorHandler(error, this.constructor.name, this.findAll.name);
     }
   }
 
@@ -90,16 +90,16 @@ export class StudentController {
         },
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findOne');
+      new ErrorHandler(error, this.constructor.name, this.findOne.name);
     }
   }
 
   @Get('/course/:id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Listagem de Alunos pelo ID do Curso' })
+  @ApiOperation({ summary: 'Read Student by Course ID' })
   @ApiParam({
     name: 'id',
-    description: 'ID do Curso',
+    description: 'Course ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async findByCourse(@Param('id') id: string) {
@@ -116,16 +116,16 @@ export class StudentController {
         }),
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'findByCourse');
+      new ErrorHandler(error, this.constructor.name, this.findByCourse.name);
     }
   }
 
   @Patch(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Atualização de Alunos' })
+  @ApiOperation({ summary: 'Update Student' })
   @ApiParam({
     name: 'id',
-    description: 'ID do Aluno',
+    description: 'Student ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async update(
@@ -143,16 +143,16 @@ export class StudentController {
         },
       };
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'update');
+      new ErrorHandler(error, this.constructor.name, this.update.name);
     }
   }
 
   @Delete(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER)
-  @ApiOperation({ summary: 'Remoção de Alunos' })
+  @ApiOperation({ summary: 'Delete Student' })
   @ApiParam({
     name: 'id',
-    description: 'ID do Aluno',
+    description: 'Student ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -160,7 +160,7 @@ export class StudentController {
     try {
       await this.studentService.remove(id);
     } catch (error) {
-      new ErrorHandler(error, this.constructor.name, 'remove');
+      new ErrorHandler(error, this.constructor.name, this.remove.name);
     }
   }
 }

@@ -25,12 +25,12 @@ describe('StudentCardService', () => {
 
   describe('create', () => {
     it('should create a student card', async () => {
-      const studentCard = await service.create({
+      const student_card = await service.create({
         student_id: 'Test Student ID',
         due_date: new Date(),
       });
-      expect(studentCard).toHaveProperty('id');
-      expect(studentCard).toHaveProperty('student_id', 'Test Student ID');
+      expect(student_card).toHaveProperty('id');
+      expect(student_card).toHaveProperty('student_id', 'Test Student ID');
     });
 
     it('should throw if student card already exists', async () => {
@@ -54,9 +54,9 @@ describe('StudentCardService', () => {
         due_date: new Date(),
       });
 
-      const studentCards = await service.findAll();
+      const student_cards = await service.findAll();
 
-      expect(studentCards).toBeInstanceOf(Array);
+      expect(student_cards).toBeInstanceOf(Array);
     });
 
     it('should throw if no student cards are found', async () => {
@@ -66,14 +66,14 @@ describe('StudentCardService', () => {
 
   describe('findOne', () => {
     it('should return a student card', async () => {
-      const studentCard = await service.create({
+      const student_card = await service.create({
         student_id: 'Test Student ID',
         due_date: new Date(),
       });
 
-      const foundStudentCard = await service.findOne(studentCard.id);
+      const foundStudentCard = await service.findOne(student_card.id);
 
-      expect(foundStudentCard).toHaveProperty('id', studentCard.id);
+      expect(foundStudentCard).toHaveProperty('id', student_card.id);
       expect(foundStudentCard).toHaveProperty('student_id', 'Test Student ID');
     });
 
@@ -84,17 +84,17 @@ describe('StudentCardService', () => {
 
   describe('update', () => {
     it('should update a student card', async () => {
-      const studentCard = await service.create({
+      const student_card = await service.create({
         student_id: 'Test Student ID',
         due_date: new Date(),
       });
 
-      const updatedStudentCard = await service.update(studentCard.id, {
+      const updatedStudentCard = await service.update(student_card.id, {
         student_id: 'Test Student ID',
         due_date: new Date(),
       });
 
-      expect(updatedStudentCard).toHaveProperty('id', studentCard.id);
+      expect(updatedStudentCard).toHaveProperty('id', student_card.id);
       expect(updatedStudentCard).toHaveProperty(
         'student_id',
         'Test Student ID',
@@ -113,14 +113,14 @@ describe('StudentCardService', () => {
 
   describe('remove', () => {
     it('should remove a student card', async () => {
-      const studentCard = await service.create({
+      const student_card = await service.create({
         student_id: 'Test Student ID',
         due_date: new Date(),
       });
 
-      await service.remove(studentCard.id);
+      await service.remove(student_card.id);
 
-      await expect(service.findOne(studentCard.id)).rejects.toThrow();
+      await expect(service.findOne(student_card.id)).rejects.toThrow();
     });
 
     it('should throw if student card is not found', async () => {

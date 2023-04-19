@@ -6,7 +6,7 @@ export class InMemorySubjectRepository implements ISubjectRepository {
   private subject: Subject[] = [];
 
   async create(data: Subject): Promise<Subject> {
-    const subject = new Subject(data);
+    const subject = data;
 
     subject.id = randomUUID();
 
