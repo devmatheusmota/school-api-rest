@@ -29,7 +29,7 @@ export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 
   @Post()
-  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Create Activity' })
   async create(@Body() createActivityDto: CreateActivityDto) {
     try {
@@ -166,7 +166,7 @@ export class ActivityController {
   }
 
   @Patch(':id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Update Activity' })
   @ApiParam({
     name: 'id',
@@ -189,7 +189,7 @@ export class ActivityController {
     }
   }
 
-  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @Delete(':id')
   @ApiOperation({ summary: 'Delete Activity' })
   @ApiParam({
