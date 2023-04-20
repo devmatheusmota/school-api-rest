@@ -45,7 +45,7 @@ export class SubjectController {
   }
 
   @Get()
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @ApiOperation({ summary: 'Read Subject' })
   async findAll() {
     try {
@@ -61,7 +61,7 @@ export class SubjectController {
   }
 
   @Get(':id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @ApiOperation({ summary: 'Read Subject by ID' })
   @ApiParam({
     name: 'id',
@@ -82,7 +82,7 @@ export class SubjectController {
   }
 
   @Get('/teacher/:id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @ApiOperation({ summary: 'Read Subject by Teacher ID' })
   @ApiParam({
     name: 'id',

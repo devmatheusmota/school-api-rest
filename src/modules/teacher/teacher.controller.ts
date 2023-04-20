@@ -47,7 +47,7 @@ export class TeacherController {
   }
 
   @Get()
-  @Roles(ROLE.ADMIN)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Read Teacher' })
   async findAll() {
     try {
@@ -68,7 +68,7 @@ export class TeacherController {
   }
 
   @Get(':id')
-  @Roles(ROLE.ADMIN)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Read Teacher By ID' })
   @ApiParam({
     name: 'id',
@@ -92,7 +92,7 @@ export class TeacherController {
   }
 
   @Patch(':id')
-  @Roles(ROLE.ADMIN)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ summary: 'Update Teacher' })
   @ApiParam({
     name: 'id',

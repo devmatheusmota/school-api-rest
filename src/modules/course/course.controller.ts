@@ -93,7 +93,7 @@ export class CourseController {
   }
 
   @Get()
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @ApiOperation({ summary: 'Read Course' })
   async findAll() {
     try {
@@ -109,7 +109,7 @@ export class CourseController {
   }
 
   @Get(':id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @ApiOperation({ summary: 'Read Course By ID' })
   @ApiParam({
     name: 'id',
@@ -132,7 +132,7 @@ export class CourseController {
   }
 
   @Get('student/:id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @ApiOperation({ summary: 'Read Course By Student ID' })
   @ApiParam({
     name: 'id',
@@ -155,7 +155,7 @@ export class CourseController {
   }
 
   @Get('teacher/:id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @ApiOperation({ summary: 'Read Course By Teacher ID' })
   @ApiParam({
     name: 'id',

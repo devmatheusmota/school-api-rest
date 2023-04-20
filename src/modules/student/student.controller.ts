@@ -50,7 +50,7 @@ export class StudentController {
   }
 
   @Get()
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @ApiOperation({ summary: 'Read Student' })
   async findAll() {
     try {
@@ -71,7 +71,7 @@ export class StudentController {
   }
 
   @Get(':id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @ApiOperation({ summary: 'Listagem de Alunos pelo ID' })
   @ApiParam({
     name: 'id',
@@ -95,7 +95,7 @@ export class StudentController {
   }
 
   @Get('/course/:id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @ApiOperation({ summary: 'Read Student by Course ID' })
   @ApiParam({
     name: 'id',
@@ -121,7 +121,7 @@ export class StudentController {
   }
 
   @Patch(':id')
-  @Roles(ROLE.ADMIN, ROLE.TEACHER)
+  @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
   @ApiOperation({ summary: 'Update Student' })
   @ApiParam({
     name: 'id',
