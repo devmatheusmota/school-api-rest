@@ -72,10 +72,10 @@ export class StudentController {
 
   @Get(':id')
   @Roles(ROLE.ADMIN, ROLE.TEACHER, ROLE.STUDENT)
-  @ApiOperation({ summary: 'Listagem de Alunos pelo ID' })
+  @ApiOperation({ summary: 'Read Student by ID' })
   @ApiParam({
     name: 'id',
-    description: 'ID do Aluno',
+    description: 'Student ID',
     example: 'f72181fe-5bf3-43fb-ab02-c1600f807efd',
   })
   async findOne(@Param('id') id: string) {
